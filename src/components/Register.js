@@ -16,7 +16,8 @@ const Register = () => {
       });
       console.log(response.status);
       if (response.status === 201) {
-        navigate("/home");
+        navigate("/login");
+        alert("đăng ký thành công vui lòng đăng nhập !!");
       }
     } catch (error) {
       console.error(error);

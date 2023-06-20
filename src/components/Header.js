@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import "../styles/Header.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import instance from "../utils/instance";
 
 const avatarImage = require("../img/avatar.png");
 const Header = () => {
   const [isListVisible, setListVisible] = useState(false);
   const [isAvatarActive, setAvatarActive] = useState(false);
+  const navigate = useNavigate();
   const toggleList = () => {
     setListVisible(!isListVisible);
     setAvatarActive(!isAvatarActive);
+  };
+  const clickLogout = async () => {
+    try {
+      await instance.post("/users/signout");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -19,7 +31,9 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <h1 className="hotels-title">HOTEL</h1>
+        <h1 className="hotels-title">
+          HOTEL<span>.</span>
+        </h1>
         <img
           style={{ display: "block" }}
           src={avatarImage}
@@ -31,7 +45,7 @@ const Header = () => {
       {isListVisible && (
         <ul className="list">
           <li>Hồ sơ cá nhân</li>
-          <li>đăng xuất</li>
+          <li onClick={clickLogout}>đăng xuất</li>
         </ul>
       )}
     </header>

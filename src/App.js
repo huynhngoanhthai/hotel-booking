@@ -1,20 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./components/Login";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Home from "./Home";
 import Register from "./components/Register";
 import { AuthProvider } from "./Context/GlobalContext";
+import Profile from "./components/Profile";
+import instance from "./utils/instance";
+
+const checkLogin = async () => {
+  try {
+    const response = await instance.get("/users/me");
+
+    if (response?.status == 200) return true;
+  } catch (error) {
+    return false;
+  }
+};
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkUserLogin = async () => {
+      const loggedIn = await checkLogin();
+      if (!loggedIn) {
+        navigate("/login");
+      }
+    };
+    checkUserLogin();
+  }, []);
+
   return (
     <AuthProvider>
-      {" "}
       <Routes>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/home" element={<Home></Home>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
+        <Route path="/profile" element={<Profile></Profile>}></Route>
       </Routes>
     </AuthProvider>
   );

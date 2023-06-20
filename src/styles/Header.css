@@ -17,6 +17,11 @@
   border-radius: 50%;
   cursor: pointer;
 }
+span {
+  color: #ff0157;
+  font-weight: 700;
+  font-size: 3rem;
+}
 /* .avatar:active {
 } */
 
