@@ -6,7 +6,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -14,7 +13,7 @@ const Login = () => {
         email,
         password,
       });
-      console.log(response);
+      console.log(response.data);
       if (response.status === 201) {
         navigate("/home");
       }

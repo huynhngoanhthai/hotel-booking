@@ -2,6 +2,7 @@
   background-color: #020951;
   padding: 20px;
   margin-bottom: 20px;
+  position: relative;
 }
 .hotels-title {
   font-size: 24px;
@@ -9,8 +10,31 @@
   color: #ffffff;
   margin-right: 16px;
 }
+
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  cursor: pointer;
+}
+/* .avatar:active {
+} */
+
+.avatar.active {
+  border: 2px solid #ffffff;
+}
+
+.list {
+  position: absolute;
+  list-style-type: none;
+  background-color: #f5f5df;
+  color: #3b4751;
+  padding: 0 10px;
+  margin-top: 0px;
+  right: 10px;
+  border-radius: 5%;
+}
+
+.list li {
+  cursor: pointer;
 }

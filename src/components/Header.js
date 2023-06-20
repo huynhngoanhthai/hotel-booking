@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Header.css";
 
 const avatarImage = require("../img/avatar.png");
 const Header = () => {
+  const [isListVisible, setListVisible] = useState(false);
+  const [isAvatarActive, setAvatarActive] = useState(false);
+  const toggleList = () => {
+    setListVisible(!isListVisible);
+    setAvatarActive(!isAvatarActive);
+  };
+
   return (
     <header className="header">
       <div
@@ -17,9 +24,16 @@ const Header = () => {
           style={{ display: "block" }}
           src={avatarImage}
           alt="Avatar"
-          className="avatar"
+          className={`avatar ${isAvatarActive ? "active" : ""}`}
+          onClick={toggleList}
         />
       </div>
+      {isListVisible && (
+        <ul className="list">
+          <li>Hồ sơ cá nhân</li>
+          <li>đăng xuất</li>
+        </ul>
+      )}
     </header>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles/Home.css";
 import Header from "./components/Header";
+import GlobalContext, { useAuth } from "./Context/GlobalContext";
 
 const images = [
   require("./img/r1.jpg"),
