@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import instance from "../utils/instance";
+import "../styles/Profile.css";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,12 +18,15 @@ const Profile = () => {
 
     fetchData();
   }, []);
+  const backToHome = () => {
+    navigate("/home");
+  };
 
   if (!userData) {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="profile-container">
       <h2>Profile</h2>
       <div>
         <strong>Email:</strong> {userData.email}
@@ -38,6 +43,7 @@ const Profile = () => {
       <div>
         <strong>Bookings:</strong> {userData.bookings.length}
       </div>
+      <button> cập nhật </button> <button onClick={backToHome}> Back </button>
     </div>
   );
 };

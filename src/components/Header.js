@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Header.css";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import instance from "../utils/instance";
 
@@ -21,6 +21,15 @@ const Header = () => {
       console.error(error);
     }
   };
+  const profile = async () => {
+    navigate("/profile");
+  };
+  const manager = async () => {
+    navigate("/manager");
+  };
+  const home = async () => {
+    navigate("/home");
+  };
 
   return (
     <header className="header">
@@ -31,7 +40,11 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <h1 className="hotels-title">
+        <h1
+          style={{ cursor: "pointer" }}
+          onClick={home}
+          className="hotels-title"
+        >
           HOTEL<span>.</span>
         </h1>
         <img
@@ -44,7 +57,8 @@ const Header = () => {
       </div>
       {isListVisible && (
         <ul className="list">
-          <li>Hồ sơ cá nhân</li>
+          <li onClick={profile}>Hồ sơ cá nhân</li>
+          <li onClick={manager}>Quản lý</li>
           <li onClick={clickLogout}>đăng xuất</li>
         </ul>
       )}

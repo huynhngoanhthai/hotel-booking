@@ -17,6 +17,7 @@ const Login = () => {
       console.log(response.data);
       if (response.status === 201) {
         navigate("/home");
+        sessionStorage.setItem("user", response.data);
       }
     } catch (error) {
       console.error(error);

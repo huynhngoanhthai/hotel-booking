@@ -1,0 +1,25 @@
+.profile-container {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-container h2 {
+  margin-bottom: 10px;
+}
+
+.profile-container div {
+  margin-bottom: 5px;
+}
+
+.profile-container strong {
+  font-weight: bold;
+}
+
+.profile-container .loading {
+  font-style: italic;
+  color: #999;
+}
