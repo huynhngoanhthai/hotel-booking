@@ -178,7 +178,7 @@
   padding: 20px;
   border-radius: 5px;
   padding-left: 40%;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .company-details h2 {
@@ -189,4 +189,9 @@
 
 .company-details p {
   margin-bottom: 5px;
+  /* font-weight: bold; */
+}
+.company-details p  .company-prototies{
+  display: inline;
+  font-weight: bold;
 }

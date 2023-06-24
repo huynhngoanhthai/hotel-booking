@@ -21,11 +21,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error);
-      if (
-        error.response.data.statusCode == 400 &&
-        error.response.data.error == "Bad Request"
-      )
-        alert("Mật khẩu hoặc tài khoản không đúng.");
+      alert("Mật khẩu hoặc tài khoản không đúng.");
     }
   };
 

@@ -1,30 +1,74 @@
 import React, { useEffect, useState } from "react";
 import instance from "../utils/instance";
-import "../styles/Manager.css";
 import { debounce } from "lodash";
-import { useNavigate, useParams } from "react-router-dom";
+import "../styles/Manager.css";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
-const CompanyDetails = () => {
+const Companies = () => {
   const [userData, setUserData] = useState(null);
-  const [hotelData, setHotelData] = useState(null);
   const [showForm, setShowForm] = useState(false); // Trạng thái hiển thị form
-  const [nameHotel, setNameHotel] = useState("");
-  const [emailHotel, setEmailHotel] = useState("");
-  const [phoneHotel, setPhoneHotel] = useState("");
-  const [addressHotel, setAddressHotel] = useState("");
+  const [nameCompany, setNameCompany] = useState("");
+  const [emailCompany, setEmailCompany] = useState("");
+  const [phoneCompany, setPhoneCompany] = useState("");
+  const [addressCompany, setAddressCompany] = useState("");
+  const [load, setload] = useState(false); // Trạng thái hiển thị form
+
   const navigate = useNavigate();
-  const { id } = useParams();
-  ///
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await instance.get("/hotels");
+        setUserData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const viewCompany = (company) => {
-   
+    // Thực hiện hành động khi xem công ty theo ID
+    console.log("View company:", company.id);
+    navigate(`/manager/hotels/${company.id}`);
   };
 
   const editCompany = async (company) => {
-  
+    // Thực hiện hành động khi cập nhật công ty theo ID
+    console.log("Edit company:", company);
+    try {
+      await instance.patch("/hotels/" + company.id, {
+        name: company.name,
+        email: company.email,
+        phone: company.phone,
+        address: company.address,
+      });
+      // alert("Success!");
+    } catch (error) {
+      console.log(error.response.data.message);
+      alert(error.response.data.message);
+    }
   };
   const rollBack = async (company) => {
-  
+    try {
+      addCompany();
+      await instance.patch("/hotels/" + company.id, {
+        name: company.name,
+        email: company.email,
+        phone: company.phone,
+        address: company.address,
+      });
+      console.log(company);
+      setUserData([...userData]);
+      // taij laij du lieu o day
+      setShowForm(false);
+    } catch (error) {
+      console.log(error.response.data.message);
+      alert(error.response.data.message);
+    }
   };
 
   // Sử dụng debounce để trì hoãn việc gọi hàm editCompany
@@ -32,47 +76,39 @@ const CompanyDetails = () => {
 
   const deleteCompany = async (company) => {
     // Thực hiện hành động khi xóa công ty theo ID
-    
-  };
-
-  ///
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await instance.get("/companies/" + id);
-        // const listHotel = await instance.get("/hotels/" + response.data.)
-        setUserData(response.data);
-        setHotelData(response.data.hotels)
-        console.log(response.data.hotels);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-  const addHotels = async() => {
-    setShowForm(true);
-    console.log(showForm);
-  };
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+    console.log("Delete company:", company.id);
     try {
-      const response = await instance.post("/hotels",{
-        name: nameHotel,
-        email: emailHotel,
-        phone: phoneHotel,
-        address: addressHotel,
-        companyId:id
-      });
-      alert("Thêm thành công");
-      setHotelData((prevUserData) => [...prevUserData, response.data]);
+      await instance.delete("/hotels/" + company.id);
+      alert("Xóa thành công");
+      const updatedUserData = userData.filter((c) => c.id !== company.id);
+      setUserData(updatedUserData);
     } catch (error) {
       console.log(error.response.data.message);
       alert(error.response.data.message);
-      
     }
-    setShowForm(false); 
+  };
+
+  const addCompany = () => {
+    setShowForm(true);
+  };
+
+  const handleFormSubmit = async (event) => {
+    // Xử lý submit form
+    event.preventDefault();
+    try {
+      const response = await instance.post("/hotels", {
+        name: nameCompany,
+        email: emailCompany,
+        phone: phoneCompany,
+        address: addressCompany,
+      });
+      alert("Thêm thành công");
+      setUserData((prevUserData) => [...prevUserData, response.data]);
+    } catch (error) {
+      console.log(error.response.data.message);
+      alert(error.response.data.message);
+    }
+    setShowForm(false); // Ẩn form sau khi lưu thông tin
   };
 
   if (!userData) {
@@ -82,20 +118,10 @@ const CompanyDetails = () => {
   return (
     <div>
       <Header />
-      <div className="company-details">
-        <h2>Company Details</h2>
-          <p><strong>ID:</strong> {userData.id}</p> 
-          <p><strong>Name:</strong> {userData.name}</p> 
-          <p><strong>Email:</strong> {userData.email}</p> 
-          <p><strong>Phone:</strong> {userData.phone}</p> 
-          <p><strong>Address:</strong> {userData.address}</p> 
-        <button className="view-button" onClick={addHotels}>
-          thêm khách sạn
-        </button>
-      </div>
+      
       <div className="company-list">
         {!showForm &&
-          hotelData.map((company) => (
+          userData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
                 <label>Name:</label>
@@ -161,39 +187,44 @@ const CompanyDetails = () => {
             </div>
           ))}
       </div>
-      {showForm && (
-        <div className="company-list">
-          <form className="company-item" onSubmit={handleFormSubmit}>
+    
+      <div className="add-button-container">
+        {!showForm ? (
+          <button className="add-button" onClick={addCompany}>
+            Thêm công ty
+          </button>
+        ) : (
+          <form className="company-form" onSubmit={handleFormSubmit}>
             <div className="input-row">
               <label>Name:</label>
               <input
-                value={nameHotel}
+                value={nameCompany}
                 type="text"
-                onChange={(event) => setNameHotel(event.target.value)}
+                onChange={(event) => setNameCompany(event.target.value)}
               />
             </div>
             <div className="input-row">
               <label>Email:</label>
               <input
-                value={emailHotel}
+                value={emailCompany}
                 type="email"
-                onChange={(event) => setEmailHotel(event.target.value)}
+                onChange={(event) => setEmailCompany(event.target.value)}
               />
             </div>
             <div className="input-row">
               <label>Phone:</label>
               <input
-                value={phoneHotel}
+                value={phoneCompany}
                 type="tel"
-                onChange={(event) => setPhoneHotel(event.target.value)}
+                onChange={(event) => setPhoneCompany(event.target.value)}
               />
             </div>
             <div className="input-row">
               <label>Address:</label>
               <input
-                value={addressHotel}
+                value={addressCompany}
                 type="text"
-                onChange={(event) => setAddressHotel(event.target.value)}
+                onChange={(event) => setAddressCompany(event.target.value)}
               />
             </div>
             <button type="submit" className="update-button">
@@ -207,12 +238,10 @@ const CompanyDetails = () => {
               Hủy
             </button>
           </form>
-        </div>
         )}
       </div>
-      
-
+    </div>
   );
 };
 
-export default CompanyDetails;
+export default Companies;
