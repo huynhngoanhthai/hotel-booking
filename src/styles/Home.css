@@ -39,3 +39,10 @@ img {
 .view-button:active {
   background-color: #1f639b;
 }
+
+.company-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

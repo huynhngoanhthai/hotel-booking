@@ -30,6 +30,10 @@ const Header = () => {
   const home = async () => {
     navigate("/home");
   };
+  const historyBooking = () => {
+    navigate("/history-booking");
+
+  }
 
   return (
     <header className="header">
@@ -59,6 +63,7 @@ const Header = () => {
         <ul className="list">
           <li onClick={profile}>Hồ sơ cá nhân</li>
           <li onClick={manager}>Quản lý</li>
+          <li onClick={historyBooking}>lịch sử Booking</li>
           <li onClick={clickLogout}>đăng xuất</li>
         </ul>
       )}

@@ -41,6 +41,8 @@ const RoomDetails = () => {
         <p><strong>Number of people:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
         <p><strong>Number of beds:</strong>    {roomData.typeRoom.numberOfBeds}   🛏️</p>
         <p><strong>Hotel:</strong> {roomData.hotel.name} 🏨</p>
+        <p><strong>Address Hotel:</strong> {roomData.hotel.address} 📍</p>
+
       </div>
       
     </div>

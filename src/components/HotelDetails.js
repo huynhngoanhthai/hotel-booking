@@ -45,7 +45,7 @@ const CompanyDetails = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
   const viewRoom = (room) => {
     navigate(`/manager/room/${room.id}`);
   }
@@ -123,7 +123,7 @@ const CompanyDetails = () => {
         const response = await instance.post("/rooms", {
             name: nameRoom,
             floor: +floorRoom,
-            status:statusRoom == "true" ? true : false,
+            status:statusRoom === "true" ? true : false,
             hotelId: id.toString(),
             typeRoomId: typeRoomData[typeRoomIndex-1].id.toString()
         });
