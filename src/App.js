@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Login from "./components/Login";
 
@@ -11,11 +11,14 @@ import Manager from "./components/Manager";
 import instance from "./utils/instance";
 import Companies from "./components/ManagerCompanies";
 import CompanyDetails from "./components/CompanyDetails";
+import HotelDetails from "./components/HotelDetails";
+import RoomDetails from "./components/RoomDetails";
+
 
 const checkLogin = async () => {
   try {
     const response = await instance.get("/users/me");
-    if (response?.status == 200) return true;
+    if (response?.status === 200) return true;
   } catch (error) {
     return false;
   }
@@ -31,7 +34,7 @@ function App() {
       }
     };
     checkUserLogin();
-  }, []);
+  });
 
   return (
     <AuthProvider>
@@ -46,6 +49,9 @@ function App() {
           element={<Companies></Companies>}
         ></Route>
         <Route path="/manager/companies/:id" element={<CompanyDetails />} />
+        <Route path="/manager/hotel/:id" element={<HotelDetails />} />
+        <Route path="/manager/room/:id" element={<RoomDetails />} />
+
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </AuthProvider>

@@ -133,6 +133,12 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+.input-row select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 .add-button-container {
   display: flex;
   justify-content: flex-end;

@@ -62,7 +62,6 @@ const Companies = () => {
       });
       console.log(company);
       setUserData([...userData]);
-      // taij laij du lieu o day
       setShowForm(false);
     } catch (error) {
       console.log(error.response.data.message);

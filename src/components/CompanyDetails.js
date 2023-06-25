@@ -16,22 +16,59 @@ const CompanyDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   ///
-  const viewCompany = (company) => {
-   
+  const viewHotel = (hotel) => {
+    navigate(`/manager/hotel/${hotel.id}`);
   };
 
-  const editCompany = async (company) => {
+  const editHotel = async (hotel) => {
+     // Thực hiện hành động khi cập nhật công ty theo ID 
+     console.log("Edit company:", hotel);
+     try {
+       await instance.patch("/hotels/" + hotel.id, {
+         name: hotel.name,
+         email: hotel.email,
+         phone: hotel.phone,
+         address: hotel.address,
+       });
+     } catch (error) {
+       console.log(error.response.data.message);
+       alert(error.response.data.message);
+     }
   
   };
-  const rollBack = async (company) => {
+  const rollBack = async (hotel) => {
+    try {
+      addHotels();
+      await instance.patch("/hotels/" + hotel.id, {
+        name: hotel.name,
+        email: hotel.email,
+        phone: hotel.phone,
+        address: hotel.address,
+      });
+      console.log(hotel);
+      cannelAddHotel();
+    } catch (error) {
+      console.log(error.response.data.message);
+      alert(error.response.data.message);
+    }
   
   };
 
-  // Sử dụng debounce để trì hoãn việc gọi hàm editCompany
-  const debouncedEditCompany = debounce(editCompany);
+  // Sử dụng debounce để trì hoãn việc gọi hàm editHotel
+  const debouncedEditHotel = debounce(editHotel);
 
-  const deleteCompany = async (company) => {
+  const deleteHotel = async (hotel) => {
     // Thực hiện hành động khi xóa công ty theo ID
+   
+    try {
+      await instance.delete("/hotels/" + hotel.id);
+      alert("Xóa thành công");
+      const updateData = hotelData.filter((c) => c.id !== hotel.id);
+      setHotelData(updateData);
+    } catch (error) {
+      console.log(error.response.data.message);
+      alert(error.response.data.message);
+    }
     
   };
 
@@ -50,11 +87,16 @@ const CompanyDetails = () => {
       }
     };
     fetchData();
-  }, []);
+  });
   const addHotels = async() => {
     setShowForm(true);
     console.log(showForm);
   };
+  const cannelAddHotel = () =>{
+    setShowForm(false);
+    setHotelData([...hotelData])
+   
+  }
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -103,7 +145,7 @@ const CompanyDetails = () => {
                   type="text"
                   defaultValue={company.name}
                   onChange={(event) =>
-                    debouncedEditCompany({
+                    debouncedEditHotel({
                       ...company,
                       name: event.target.value,
                     })
@@ -116,7 +158,7 @@ const CompanyDetails = () => {
                   type="email"
                   defaultValue={company.email}
                   onChange={(event) =>
-                    debouncedEditCompany({
+                    debouncedEditHotel({
                       ...company,
                       email: event.target.value,
                     })
@@ -129,7 +171,7 @@ const CompanyDetails = () => {
                   type="tel"
                   defaultValue={company.phone}
                   onChange={(event) =>
-                    debouncedEditCompany({
+                    debouncedEditHotel({
                       ...company,
                       phone: event.target.value,
                     })
@@ -142,20 +184,20 @@ const CompanyDetails = () => {
                   type="text"
                   defaultValue={company.address}
                   onChange={(event) =>
-                    debouncedEditCompany({
+                    debouncedEditHotel({
                       ...company,
                       address: event.target.value,
                     })
                   }
                 />
               </div>
-              <button className="view-button" onClick={() => viewCompany(company)}>
+              <button className="view-button" onClick={() => viewHotel(company)}>
                 Xem
               </button>
               <button className="update-button" onClick={() => rollBack(company)}>
                 hoàn lại
               </button>
-              <button className="delete-button" onClick={() => deleteCompany(company)}>
+              <button className="delete-button" onClick={() => deleteHotel(company)}>
                 Xóa
               </button>
             </div>
@@ -202,7 +244,7 @@ const CompanyDetails = () => {
             <button
               type="button"
               className="delete-button"
-              onClick={() => setShowForm(false)}
+              onClick={cannelAddHotel}
             >
               Hủy
             </button>
