@@ -16,7 +16,6 @@ import RoomDetails from "./components/RoomDetails";
 import Booking from "./components/Booking";
 import HistoryBooking from "./components/historyBooking";
 
-
 const checkLogin = async () => {
   try {
     const response = await instance.get("/users/me");
@@ -47,17 +46,17 @@ function App() {
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/manager" element={<Manager></Manager>}></Route>
         <Route path="/history-booking" element={<HistoryBooking />} />
+        <Route path="/manager/booking/:id" element={<Booking />} />
         <Route
           path="/manager/companies"
           element={<Companies></Companies>}
-        ></Route>
+        >
+        </Route>
         <Route path="/manager/companies/:id" element={<CompanyDetails />} />
         <Route path="/manager/hotel/:id" element={<HotelDetails />} />
         <Route path="/manager/room/:id" element={<RoomDetails />} />
-        <Route path="/manager/booking/:id" element={<Booking />} />
-        
-
-
+        <Route path="/manager/*" element={<Companies></Companies>} />
+      
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </AuthProvider>

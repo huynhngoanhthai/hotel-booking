@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import instance from "../utils/instance";
 import "../styles/Profile.css";
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const HistoryBooking = () => {
     const [userData, setUserData] = useState(null);
+
+  const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -19,7 +22,20 @@ const HistoryBooking = () => {
         fetchData();
     }, []);
    
-
+    const viewRoom = (room) => {
+        console.log(room.id);
+        navigate("/manager/booking/" + room.id);
+    };
+    const deleteHistoryBook = async(room) => {
+        try {
+            await instance.delete("/bookings/"+room.id);
+            const updatedUserData = userData.bookings.filter((c) => c.id !== room.id);
+            console.log(updatedUserData);
+            setUserData({...userData,bookings: updatedUserData});
+        } catch (error) {
+            
+        }
+    }
     if (!userData) {
         return <div>Loading...</div>;
     }
@@ -53,13 +69,11 @@ const HistoryBooking = () => {
                             />
                         </div>
                         
-                        <button className="view-button" onClick={() => (room)}>
+                        <button className="view-button" onClick={() => viewRoom(room)}>
                             Xem
                         </button>
-                        <button className="update-button" onClick={() => (room)}>
-                            hoàn lại
-                        </button>
-                        <button className="delete-button" onClick={() => (room)}>
+                    
+                        <button className="delete-button" onClick={() => deleteHistoryBook(room)}>
                             Xóa
                         </button>
                     </div>

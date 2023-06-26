@@ -11,6 +11,7 @@ const CompanyDetails = () => {
   const [hotelData, setHotelData] = useState(null);
   const [typeRoomData, setTypeRoomData] = useState(null);
   const [commentData, setCommentData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const [showForm, setShowForm] = useState(false); // Trạng thái hiển thị form
   const [showFormAddtypeRoom, setShowFormAddtypeRoom] = useState(false); 
@@ -41,7 +42,9 @@ const CompanyDetails = () => {
         setHotelData(response.data);
         setRoomData(response.data.rooms);
         setTypeRoomData(response.data.typeRooms);
-        setCommentData(response.data.comments.slice().sort((a, b) => a.id - b.id))
+        setCommentData(response.data.comments.slice().sort((a, b) => a.id - b.id));
+        const res = await instance.get("users/me");
+        setUserData(res.data);
         console.log(response.data.typeRooms);
       } catch (error) {
         console.log(error);
@@ -214,10 +217,12 @@ const CompanyDetails = () => {
     setShowFormAddtypeRoom(false);
   };
 
-  if (!hotelData) {
+  if (!hotelData || !userData) {
     return <div>Loading...</div>;
   };
-
+  if(!userData.admin){
+    navigate("/home");
+  }
   return (
     <div>
       <Header />
