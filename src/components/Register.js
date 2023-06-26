@@ -22,8 +22,8 @@ const Register = () => {
     } catch (error) {
       console.error(error);
       if (
-        error.response.data.statusCode == 400 &&
-        error.response.data.error == "Bad Request"
+        error.response.data.statusCode === 400 &&
+        error.response.data.error === "Bad Request"
       )
         alert("tài khoản đã tồn tại");
     }

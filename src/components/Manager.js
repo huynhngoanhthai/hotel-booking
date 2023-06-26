@@ -20,7 +20,7 @@ const Manager = () => {
     };
 
     fetchData();
-  }, []);
+  });
 
   const backToProfile = () => {
     navigate("/profile");

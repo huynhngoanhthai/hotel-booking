@@ -20,7 +20,7 @@ const RoomDetails = () => {
     };
 
     fetchData();
-  });
+  },[id]);
 
   
   if (!roomData) {

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import instance from "../utils/instance";
 import "../styles/Profile.css";
-import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
-const Profile = () => {
+const HistoryBooking = () => {
     const [userData, setUserData] = useState(null);
-    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,9 +18,7 @@ const Profile = () => {
 
         fetchData();
     }, []);
-    const backToHome = () => {
-        navigate("/home");
-    };
+   
 
     if (!userData) {
         return <div>Loading...</div>;
@@ -37,22 +33,26 @@ const Profile = () => {
                 <h2>history booking</h2>
             </div >
             {userData.bookings.map((room) => (
-                <div className="company-list">
-                    <div key={room.id} className="company-item">
+                <div key={room.id} className="company-list">
+                    <div className="company-item">
                         <div className="input-row">
                             <label>Check In Date:</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(room.checkInDate).toISOString().split('T')[0]}
+                                readOnly    
                             />
                         </div>
+
                         <div className="input-row">
                             <label>Check Out Date:</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(room.checkOutDate).toISOString().split('T')[0]}
+                                readOnly
                             />
                         </div>
+                        
                         <button className="view-button" onClick={() => (room)}>
                             Xem
                         </button>
@@ -70,4 +70,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default HistoryBooking;

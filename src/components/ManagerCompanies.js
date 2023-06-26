@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 const Companies = () => {
+  const [useData, setUseData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [showForm, setShowForm] = useState(false); // Trạng thái hiển thị form
   const [nameCompany, setNameCompany] = useState("");
@@ -19,8 +20,10 @@ const Companies = () => {
     const fetchData = async () => {
       try {
         const response = await instance.get("/companies");
-        setUserData(response.data);
-        console.log(response.data);
+        setUseData(response.data);
+        const res = await instance.get("/users/me");
+        setUserData(res.data)
+        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -61,7 +64,7 @@ const Companies = () => {
         address: company.address,
       });
       console.log(company);
-      setUserData([...userData]);
+      setUseData([...useData]);
       setShowForm(false);
     } catch (error) {
       console.log(error.response.data.message);
@@ -78,8 +81,8 @@ const Companies = () => {
     try {
       await instance.delete("/companies/" + company.id);
       alert("Xóa thành công");
-      const updatedUserData = userData.filter((c) => c.id !== company.id);
-      setUserData(updatedUserData);
+      const updatedUseData = useData.filter((c) => c.id !== company.id);
+      setUseData(updatedUseData);
     } catch (error) {
       console.log(error.response.data.message);
       alert(error.response.data.message);
@@ -101,7 +104,7 @@ const Companies = () => {
         address: addressCompany,
       });
       alert("Thêm thành công");
-      setUserData((prevUserData) => [...prevUserData, response.data]);
+      setUseData((prevUseData) => [...prevUseData, response.data]);
     } catch (error) {
       console.log(error.response.data.message);
       alert(error.response.data.message);
@@ -109,17 +112,20 @@ const Companies = () => {
     setShowForm(false); // Ẩn form sau khi lưu thông tin
   };
 
-  if (!userData) {
+  if (!useData ||  !userData) {
     return <div>Loading...</div>;
   }
-
+  if(!userData.admin)
+  {
+    navigate("/home ");
+  }
   return (
     <div>
       <Header />
       
       <div className="company-list">
         {!showForm &&
-          userData.map((company) => (
+          useData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
                 <label>Name:</label>

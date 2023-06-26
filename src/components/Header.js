@@ -25,7 +25,7 @@ const Header = () => {
     navigate("/profile");
   };
   const manager = async () => {
-    navigate("/manager");
+    navigate("/manager/companies");
   };
   const home = async () => {
     navigate("/home");

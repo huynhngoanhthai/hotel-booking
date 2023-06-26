@@ -87,7 +87,7 @@ const CompanyDetails = () => {
       }
     };
     fetchData();
-  });
+  },[id]);
   const addHotels = async() => {
     setShowForm(true);
     console.log(showForm);

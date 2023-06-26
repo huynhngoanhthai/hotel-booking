@@ -4,11 +4,13 @@ import "../styles/Manager.css";
 import { debounce } from "lodash";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header";
+import { FaTrash } from "react-icons/fa";
 
 const CompanyDetails = () => {
   const [roomData, setRoomData] = useState(null);
   const [hotelData, setHotelData] = useState(null);
   const [typeRoomData, setTypeRoomData] = useState(null);
+  const [commentData, setCommentData] = useState(null);
 
   const [showForm, setShowForm] = useState(false); // Trạng thái hiển thị form
   const [showFormAddtypeRoom, setShowFormAddtypeRoom] = useState(false); 
@@ -18,9 +20,9 @@ const CompanyDetails = () => {
   const [typeRoomIndex, setTypeRoomIndex] = useState(1);
   
   const [nameTypeRoom,setNameTypeRoom] = useState("");
-  const [priceTypeRoom,setPriceTypeRoom] = useState("")
-  const [numberOfPeopleTypeRoom,setNumberOfPeopleTypeRoom] = useState("")
-  const [numberOfBedsTypeRoom,setNumberOfBedsTypeRoom] = useState("")
+  const [priceTypeRoom,setPriceTypeRoom] = useState("");
+  const [numberOfPeopleTypeRoom,setNumberOfPeopleTypeRoom] = useState("");
+  const [numberOfBedsTypeRoom,setNumberOfBedsTypeRoom] = useState("");
 
 
 
@@ -38,7 +40,8 @@ const CompanyDetails = () => {
         const response = await instance.get("/hotels/" + id);
         setHotelData(response.data);
         setRoomData(response.data.rooms);
-        setTypeRoomData(response.data.typeRooms)
+        setTypeRoomData(response.data.typeRooms);
+        setCommentData(response.data.comments.slice().sort((a, b) => a.id - b.id))
         console.log(response.data.typeRooms);
       } catch (error) {
         console.log(error);
@@ -195,15 +198,25 @@ const CompanyDetails = () => {
   const addTypeRoom = () => {
     setShowFormAddtypeRoom(true);
     cannelAddRoom();
-  }
+  };
+  const deleteComment = async(id) => {
+    try {
+      await instance.delete("/comments/" + id);
+      const updatedComments = commentData.filter(comment => comment.id !== id);
+      setCommentData(updatedComments);
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.message);      
+    }
+  };
 
   const cannelTypeRoom = () => {
     setShowFormAddtypeRoom(false);
-  }
+  };
 
   if (!hotelData) {
     return <div>Loading...</div>;
-  }
+  };
 
   return (
     <div>
@@ -222,7 +235,20 @@ const CompanyDetails = () => {
             thêm loại phòng 
         </button>
       </div>
-      
+
+      {commentData.length !== 0  &&
+        <div className="company-details">
+          <h2>Comments Hotel</h2>
+          <ul  className="comment-item">
+            {commentData.slice(-10).map(comment => (
+              <div className="comment-wrapper">
+                <li key={comment.id}>{comment.content}</li>{
+                <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
+              </div>
+            ))}
+          </ul>
+        </div>
+      }
       <div className="company-list">
         {!showFormAddtypeRoom && !showForm &&
           roomData.map((company) => (

@@ -36,7 +36,7 @@ function App() {
       }
     };
     checkUserLogin();
-  });
+  },[navigate]);
 
   return (
     <AuthProvider>
@@ -58,7 +58,7 @@ function App() {
         
 
 
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </AuthProvider>
   );
