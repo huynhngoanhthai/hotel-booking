@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import instance from "../utils/instance";
+import Header from "./Header";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: "300px", margin: "0 auto" }}>
+    <><Header /><div style={{ maxWidth: "300px", margin: "0 auto" }}>
       <h2>Login</h2>
       <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
         <div>
@@ -40,8 +41,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={{ width: "100%", padding: "5px", marginBottom: "10px" }}
-            required
-          />
+            required />
         </div>
         <div>
           <label>Password:</label>
@@ -50,8 +50,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={{ width: "100%", padding: "5px", marginBottom: "10px" }}
-            required
-          />
+            required />
         </div>
         <button
           type="submit"
@@ -80,7 +79,7 @@ const Login = () => {
           Đăng ký
         </button>
       </form>
-    </div>
+    </div></>
   );
 };
 

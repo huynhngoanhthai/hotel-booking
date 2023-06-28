@@ -35,7 +35,7 @@ function App() {
       }
     };
     checkUserLogin();
-  },[]);
+  }, []); // eslint-disable-next-line
 
   return (
     <AuthProvider>
@@ -47,17 +47,19 @@ function App() {
         <Route path="/manager" element={<Manager></Manager>}></Route>
         <Route path="/history-booking" element={<HistoryBooking />} />
         <Route path="/manager/booking/:id" element={<Booking />} />
-        <Route
-          path="/manager/companies"
-          element={<Companies></Companies>}
-        >
+        <Route path="/manager/companies" element={<Companies></Companies>}>
+          {/* Chuyển hướng tới "/login" cho "/manager/companies" */}
+          <Route path="*" element={<Navigate to="/login" />} />
         </Route>
         <Route path="/manager/companies/:id" element={<CompanyDetails />} />
         <Route path="/manager/hotel/:id" element={<HotelDetails />} />
         <Route path="/manager/room/:id" element={<RoomDetails />} />
-        <Route path="/manager/*" element={<Companies></Companies>} />
-      
-        <Route path="*" element={<Navigate to="/home" />} />
+        <Route path="/manager/*" element={<Companies></Companies>}>
+          {/* Chuyển hướng tới "/login" cho "/manager/*" */}
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </AuthProvider>
   );
