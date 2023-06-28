@@ -35,7 +35,7 @@ function App() {
       }
     };
     checkUserLogin();
-  },[navigate]);
+  },[]);
 
   return (
     <AuthProvider>
