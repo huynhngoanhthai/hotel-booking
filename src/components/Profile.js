@@ -13,6 +13,7 @@ const Profile = () => {
         setUserData(response.data);
       } catch (error) {
         console.log(error);
+        navigate("/login");
       }
     };
 

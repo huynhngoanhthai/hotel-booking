@@ -6,12 +6,22 @@ import instance from "../utils/instance";
 
 const avatarImage = require("../img/avatar.png");
 const Header = () => {
+  const [userData, setUserData] = useState(null);
   const [isListVisible, setListVisible] = useState(false);
   const [isAvatarActive, setAvatarActive] = useState(false);
   const navigate = useNavigate();
-  const toggleList = () => {
-    setListVisible(!isListVisible);
-    setAvatarActive(!isAvatarActive);
+
+  const toggleList = async() => {
+    try {
+      const response = await instance.get("/users/me");
+      setUserData(response.data);
+      setListVisible(!isListVisible);
+      setAvatarActive(!isAvatarActive);
+    } catch (error) {
+      alert("ban chua login");
+      navigate("/login");
+    }
+  
   };
   const clickLogout = async () => {
     try {
@@ -32,8 +42,10 @@ const Header = () => {
   };
   const historyBooking = () => {
     navigate("/history-booking");
-
-  }
+  };
+  const managerUsers = () => {
+    navigate("/manager/users");
+  };
 
   return (
     <header className="header">
@@ -62,7 +74,8 @@ const Header = () => {
       {isListVisible && (
         <ul className="list">
           <li onClick={profile}>Hồ sơ cá nhân</li>
-          <li onClick={manager}>Quản lý</li>
+          {userData?.admin &&  <li onClick={manager}>Quản lý</li>}
+          {userData?.admin &&  <li onClick={managerUsers}>Quản lý user</li>}
           <li onClick={historyBooking}>lịch sử Booking</li>
           <li onClick={clickLogout}>đăng xuất</li>
         </ul>

@@ -15,6 +15,7 @@ import HotelDetails from "./components/HotelDetails";
 import RoomDetails from "./components/RoomDetails";
 import Booking from "./components/Booking";
 import HistoryBooking from "./components/historyBooking";
+import ManagerUsers from "./components/ManagerUsers";
 
 const checkLogin = async () => {
   try {
@@ -54,7 +55,9 @@ function App() {
         <Route path="/manager/companies/:id" element={<CompanyDetails />} />
         <Route path="/manager/hotel/:id" element={<HotelDetails />} />
         <Route path="/manager/room/:id" element={<RoomDetails />} />
+        <Route path="/manager/users" element={<ManagerUsers/>}/>
         <Route path="/manager/*" element={<Companies></Companies>}>
+
           {/* Chuyển hướng tới "/login" cho "/manager/*" */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>

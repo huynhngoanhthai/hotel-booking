@@ -16,6 +16,7 @@ const HistoryBooking = () => {
                 console.log(response.data);
             } catch (error) {
                 console.log(error);
+                navigate("/login");
             }
         };
 
