@@ -3,6 +3,11 @@
   /* padding: 20px; */
   margin-bottom: 20px;
   position: relative;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 .hotels-title {
   font-size: 24px;

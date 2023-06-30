@@ -3,15 +3,19 @@ import instance from "../utils/instance";
 import "../styles/Profile.css";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import Loading from "./loading";
 
 const HistoryBooking = () => {
     const [userData, setUserData] = useState(null);
-
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await instance.get("/users/me");
+                if (response.data.admin === true) {
+                    const response1 = await instance.get("/bookings");
+                    response.data.bookings = response1.data;
+                }
                 setUserData(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -19,26 +23,31 @@ const HistoryBooking = () => {
                 navigate("/login");
             }
         };
-
-        fetchData();
+        const delay = setTimeout(() => {
+            fetchData();
+        }, 100);
+        return () => {
+            clearTimeout(delay);
+        };
     }, []);
-   
+
     const viewRoom = (room) => {
         console.log(room.id);
-        navigate("/manager/booking/" + room.id);
+        navigate("/manager/BookingDetails/" + room.id);
     };
-    const deleteHistoryBook = async(room) => {
+
+    const deleteHistoryBook = async (room) => {
         try {
-            await instance.delete("/bookings/"+room.id);
+            await instance.delete("/bookings/" + room.id);
             const updatedUserData = userData.bookings.filter((c) => c.id !== room.id);
             console.log(updatedUserData);
-            setUserData({...userData,bookings: updatedUserData});
+            setUserData({ ...userData, bookings: updatedUserData });
         } catch (error) {
-            
+
         }
     }
     if (!userData) {
-        return <div>Loading...</div>;
+        return <div><Loading /></div>;
     }
     if (userData.bookings.length === 0) {
         return (<><Header /><div className="profile-container"><h2>chua co lich su</h2> </div></>)
@@ -49,38 +58,48 @@ const HistoryBooking = () => {
             <div className="company-details">
                 <h2>history booking</h2>
             </div >
-            {userData.bookings.map((room) => (
-                <div key={room.id} className="company-list">
+            <div className="company-list">
+                {userData.bookings.map((room) => (
+
                     <div className="company-item">
                         <div className="input-row">
-                            <label>Check In Date:</label>
+                            <label>Check In :</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(room.checkInDate).toISOString().split('T')[0]}
-                                readOnly    
+                                readOnly
                             />
                         </div>
 
                         <div className="input-row">
-                            <label>Check Out Date:</label>
+                            <label>Check Out :</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(room.checkOutDate).toISOString().split('T')[0]}
                                 readOnly
                             />
                         </div>
-                        
+
+                        <div className="input-row">
+                            <label>Trạng Thái Booking:</label>
+                            <input
+                                type="text"
+                                defaultValue={room.status}
+                                readOnly
+                            />
+                        </div>
                         <button className="view-button" onClick={() => viewRoom(room)}>
                             Xem
                         </button>
-                    
+                        <button className="update-button" onClick={() => viewRoom(room)}>
+                            Xác Nhận
+                        </button>
                         <button className="delete-button" onClick={() => deleteHistoryBook(room)}>
-                            Xóa
+                            Từ Chối
                         </button>
                     </div>
-                </div>
-            ))}
-
+                ))}
+            </div>
         </div>
     );
 };

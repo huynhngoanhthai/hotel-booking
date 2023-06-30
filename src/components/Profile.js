@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import instance from "../utils/instance";
 import "../styles/Profile.css";
 import { useNavigate } from "react-router-dom";
+import Loading from "./loading";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -17,14 +18,20 @@ const Profile = () => {
       }
     };
 
-    fetchData();
+    const delay = setTimeout(() => {
+      fetchData();
+    }, 100);
+
+    return () => {
+      clearTimeout(delay);
+    };
   }, []);
   const backToHome = () => {
     navigate("/home");
   };
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
   return (
     <div className="profile-container">

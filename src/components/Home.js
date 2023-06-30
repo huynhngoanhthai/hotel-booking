@@ -3,53 +3,117 @@ import "../styles/Home.css";
 import Header from "./Header";
 import instance from "../utils/instance";
 import { useNavigate } from "react-router-dom";
+import Loading from "./loading";
+import CatalogItem from "./CatalogItem";
 
 
 
 const Home = () => {
-  // const getPayload = localStorage.setItem("user", localStorage.getItem("user"));
   const [useData, setUseData] = useState(null);
   const [hotelData, setHotelData] = useState(null);
+  const [companiesData, setCompaniesData] = useState(null);
+  const [showCatalog, setShowCatalog] = useState(false);
+  const [showCompanies, setShowCompanies] = useState(false);
+  const [showHotels, setShowHotels] = useState(false);
+  const [showRooms, setShowRooms] = useState(true);
+
 
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get("/rooms");
-        setUseData(response.data);
-        const res = await instance.get("/hotels");
-        setHotelData(res.data);
+        const companies = await instance.get("/companies");
+        setCompaniesData(companies.data);
+        const rooms = await instance.get("/rooms");
+        setUseData(rooms.data);
+        const hotels = await instance.get("/hotels");
+        setHotelData(hotels.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchData();
+
+    const delay = setTimeout(() => {
+      fetchData();
+    }, 1000);
+
+    return () => {
+      clearTimeout(delay);
+    };
   }, []);
   const viewRoom = (room) => {
-    navigate("/manager/booking/"+room.id)
+    navigate("/manager/booking/" + room.id)
   }
 
   const viewHotel = async (hotel) => {
     try {
-      const response = await instance.get("/hotels/"+hotel.id);
-      setUseData(response.data.rooms);
+      const response = await instance.get("/hotels/" + hotel.id);
+      // setUseData(response.data.rooms);
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.message);
+    }
+  }
+  const viewCompanies = async (hotel) => {
+    try {
+      const response = await instance.get("/Companies/" + hotel.id);
+      // setUseData(response.data.rooms);
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);
     }
   }
 
-  if (!useData || !hotelData) {
-    return <div>Loading...</div>;
+  const clickedCatalog = () => {
+    setShowCatalog(!showCatalog);
+  }
+  const clickedShowCompanies = () => {
+    setShowHotels(false);
+    setShowCompanies(true);
+    setShowRooms(false);
+    console.log(showCompanies);
+  }
+  const clickedShowHotels = () => {
+    setShowHotels(true);
+    setShowCompanies(false);
+    setShowRooms(false);
+    
+
+  }
+  const clickedShowRooms = () => {
+    setShowRooms(true);
+    setShowHotels(false);
+    setShowCompanies(false);
+  }
+
+
+
+
+  if (!useData || !hotelData || !companiesData) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
   }
   return (
     <div>
       <Header />
-      <div className="company-details">
-        <h2>Danh Sach Hotels</h2>
+      <div>
+        <h2 style={{ cursor: "pointer" }} onClick={clickedCatalog}>Catalog</h2>
+        {showCatalog && (
+          <>
+            <div onClick={clickedShowCompanies}><CatalogItem  title="Danh Sách Công Ty" description="Hiển thị danh sách tất cả công ty" /></div>
+            <div onClick={clickedShowHotels} ><CatalogItem title="Danh Sách Khách Sạn" description="Hiển thị danh sách tất cả khạch sạn" /></div>
+            <div onClick={clickedShowRooms}><CatalogItem  title="Danh Sách Phòng" description="Hiển thị danh sách tất cả phòng" /></div>
+          </>)}
       </div>
-      <div className="company-list">
-        { hotelData.map((company) => (
+      {showCompanies && !showHotels && !showRooms && <>
+        <div className="company-details">
+          <h2>Danh Sach Công Ty</h2>
+        </div>
+        <div className="company-list">
+          {companiesData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
                 <label>Name:</label>
@@ -58,7 +122,7 @@ const Home = () => {
                   defaultValue={company.name}
                   readOnly
                 />
-              </div>  
+              </div>
               <div className="input-row">
                 <label>Email:</label>
                 <input
@@ -74,7 +138,7 @@ const Home = () => {
                   defaultValue={company.phone}
                   readOnly
                 />
-              </div>  
+              </div>
               <div className="input-row">
                 <label>Address:</label>
                 <input
@@ -82,20 +146,23 @@ const Home = () => {
                   defaultValue={company.address}
                   readOnly
                 />
-              </div>    
-        
-              <button className="view-button" onClick={() => {viewHotel(company)}}>
+              </div>
+
+              <button className="view-button" onClick={() => { viewHotel(company) }}>
                 Xem
               </button>
-             
+
             </div>
-        ))}
-      </div>
-      <div className="company-details">
-        <h2>Danh Sach Phong</h2>
-      </div>
-      <div className="company-list">
-        { useData.map((company) => (
+          ))}
+        </div>
+      </>}
+
+      {!showCompanies && showHotels && !showRooms && <>
+        <div className="company-details">
+          <h2>Danh Sach Hotels</h2>
+        </div>
+        <div className="company-list">
+          {hotelData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
                 <label>Name:</label>
@@ -104,7 +171,56 @@ const Home = () => {
                   defaultValue={company.name}
                   readOnly
                 />
-              </div>  
+              </div>
+              <div className="input-row">
+                <label>Email:</label>
+                <input
+                  type="text"
+                  defaultValue={company.email}
+                  readOnly
+                />
+              </div>
+              <div className="input-row">
+                <label>Phone:</label>
+                <input
+                  type="text"
+                  defaultValue={company.phone}
+                  readOnly
+                />
+              </div>
+              <div className="input-row">
+                <label>Address:</label>
+                <input
+                  type="text"
+                  defaultValue={company.address}
+                  readOnly
+                />
+              </div>
+
+              <button className="view-button" onClick={() => { viewHotel(company) }}>
+                Xem
+              </button>
+
+            </div>
+          ))}
+        </div>
+      </>}
+
+      {!showCompanies && !showHotels && showRooms && <>
+        <div className="company-details">
+          <h2>Danh Sach Phong</h2>
+        </div>
+        <div className="company-list">
+          {useData.map((company) => (
+            <div key={company.id} className="company-item">
+              <div className="input-row">
+                <label>Name:</label>
+                <input
+                  type="text"
+                  defaultValue={company.name}
+                  readOnly
+                />
+              </div>
               <div className="input-row">
                 <label > Floor:</label>
                 <input
@@ -130,7 +246,7 @@ const Home = () => {
                   readOnly
                 />
               </div>
-              
+
               <div className="input-row">
                 <label > Price:</label>
                 <input
@@ -158,12 +274,13 @@ const Home = () => {
                 />
               </div>
 
-              <button className="view-button" onClick={() => {viewRoom(company)}}>
+              <button className="view-button" onClick={() => { viewRoom(company) }}>
                 Xem
               </button>
             </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </>}
     </div>
   );
 };

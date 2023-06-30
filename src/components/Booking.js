@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaTrash } from 'react-icons/fa';
 import instance from "../utils/instance";
-import "../styles/room.css";
+import "../styles/Booking.css";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
 const images = [
@@ -20,7 +20,7 @@ const Booking = () => {
   const [showForm, setShowForm] = useState(false);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [content,setContent] = useState("");
+  const [content, setContent] = useState("");
 
   const { id } = useParams();
 
@@ -29,7 +29,7 @@ const Booking = () => {
       try {
         const response = await instance.get("/rooms/" + id);
         setRoomData(response.data);
-        const res = await instance.get("/hotels/"+response.data.hotel.id);
+        const res = await instance.get("/hotels/" + response.data.hotel.id);
         setCommentData(res.data.comments.slice().sort((a, b) => a.id - b.id));
         const res1 = await instance.get("/users/me");
         setUserData(res1.data);
@@ -49,13 +49,16 @@ const Booking = () => {
     setShowForm(false);
   };
 
-  const addComment = async() => {
+  const addComment = async () => {
+    if (content === "") {
+      return setContent("");
+    }
     try {
       const response = await instance.post("/comments", {
-          content: content,
-          hotelId: roomData.hotel.id.toString()
+        content: content,
+        hotelId: roomData.hotel.id.toString()
       });
-      setCommentData([...commentData,response.data]);
+      setCommentData([...commentData, response.data]);
       setContent("");
     } catch (error) {
       console.log(error.response.data.message);
@@ -86,60 +89,64 @@ const Booking = () => {
     cannelBooking();
   };
 
-  const deleteComment = async(id) => {
+  const deleteComment = async (id) => {
     try {
       await instance.delete("/comments/" + id);
       const updatedComments = commentData.filter(comment => comment.id !== id);
       setCommentData(updatedComments);
     } catch (error) {
       console.log(error);
-      alert(error.response.data.message);      
+      alert(error.response.data.message);
     }
   };
 
-  
+
   if (!roomData || !commentData || !userData) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <div>
       <Header />
-      {!showForm && (<div className="room-list">
-        <div className="room-details">
-          <h2>Room Details</h2>
-          <p><strong>ID:</strong> {roomData.id}</p>
-          <p><strong>Name:</strong> {roomData.name}</p>
-          <p><strong>Floor:</strong> {roomData.floor} 🏢</p>
-          <p><strong>Status:</strong> {roomData.status ? 'True' : 'False'}</p>
-          <p><strong>Type Room:</strong> {roomData.typeRoom.name}</p>
-          <p><strong>Price:</strong> {roomData.typeRoom.price}$ 💰</p>
-          <p><strong>Number of people:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
-          <p><strong>Number of beds:</strong>    {roomData.typeRoom.numberOfBeds}   🛏️</p>
-          <p><strong>Hotel:</strong> {roomData.hotel.name} 🏨</p>
-          <p><strong>Address Hotel:</strong> {roomData.hotel.address} 📍</p>
-          <img src={images[(roomData.id % 6)]} alt="Room" />
-          <button className="add-button" onClick={addBooking}> Booking</button>
-        </div>
-        <div className="room-details">
-          <h2>Comments Hotel</h2>
-          <ul>
-            {commentData.slice(-10).map(comment => (
-              <div className="comment-wrapper">
-                <li key={comment.id}>{comment.content}</li>{userData.admin &&
-                <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
-              </div>
-            ))}
-          </ul>
-          <input 
-            className="input-comment" type="text" 
-            value={content} 
-            onChange={(event) => setContent(event.target.value)}
-            onKeyDown={(event) => event.keyCode === 13 ? addComment():undefined}
-          />
-          <button className="add-button" onClick={addComment}> comment</button>
-        </div>
-      </div>
+      {!showForm && (
+        <><div className="room-list">
+
+          <div className="image">
+            <img className="image-room" src={images[(roomData.id % 6)]} alt="Room" />
+          </div>
+          <div className="room-details">
+            <h2>Room Details</h2>
+            <p className="details-wrapper"><strong>ID:</strong> {roomData.id}</p>
+            <p className="details-wrapper" ><strong>Name:</strong> {roomData.name}</p>
+            <p className="details-wrapper" ><strong>Floor:</strong> {roomData.floor} 🏢</p>
+            <p className="details-wrapper" ><strong>Status:</strong> {roomData.status ? 'True' : 'False'}</p>
+            <p className="details-wrapper" ><strong>Type Room:</strong> {roomData.typeRoom.name}</p>
+            <p className="details-wrapper" ><strong>Price:</strong> {roomData.typeRoom.price}$ 💰</p>
+            <p className="details-wrapper" ><strong>Number of people:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
+            <p className="details-wrapper" ><strong>Number of beds:</strong>    {roomData.typeRoom.numberOfBeds}   🛏️</p>
+            <p className="details-wrapper" ><strong>Hotel:</strong> {roomData.hotel.name} 🏨</p>
+            <p className="details-wrapper" ><strong>Address Hotel:</strong> {roomData.hotel.address} 📍</p>
+            <button className="add-button-booking" onClick={addBooking}> Booking</button>
+          </div>
+
+
+        </div><div className="hotel-comment">
+            <h2>Comments Hotel</h2>
+            <ul>
+              {commentData.slice(-20).map(comment => (
+                <div className="comment-wrapper">
+                  <li key={comment.id}>{comment.content}</li>{userData.admin &&
+                    <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
+                </div>
+              ))}
+            </ul>
+            <input
+              className="input-comment" type="text"
+              value={content}
+              onChange={(event) => setContent(event.target.value)}
+              onKeyDown={(event) => event.keyCode === 13 ? addComment() : undefined} />
+            <button className="add-button" onClick={addComment}> comment</button>
+          </div></>
       )
 
       }
@@ -175,6 +182,10 @@ const Booking = () => {
             </button>
           </form>
         </div>
+
+
+
+       
       )}
 
 
