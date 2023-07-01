@@ -74,7 +74,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: auto;
+  margin-left: 0px;
   margin-right: 10px;
   width: 90%;
 
@@ -218,5 +218,21 @@
 
 .content{
   overflow: hidden;
+
+}
+.hotel-comment-booking{
+  margin: 10px 5%;
+  width: 90%;
+  display: inline-block;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  /* width: 900px; */
+  max-height: 700px;
+  overflow: auto;
+  text-overflow: ellipsis;
+
+  display: flex;
+  flex-direction: column-reverse;
 
 }

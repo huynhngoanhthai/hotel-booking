@@ -134,14 +134,14 @@ const Booking = () => {
         </div>
           <div className="hotel-comment">
             <h2>Bình Luận Về Khách Sạn</h2>
-            <ul>
-              {commentData.slice(-20).map(comment => (
+            <ul className="hotel-comment-booking">
+              {commentData.slice().map(comment => (
                 <div className="comment-wrapper">
                   <div>{comment.user.name}
-                    <li  className="content" style={{ marginTop: "5px",padding: "10px", border: "2px solid black",borderRadius:"4px", backgroundColor: "white", maxWidth: "600px", wordWrap: "break-word" }} key={comment.id}>{comment.content}</li>
+                    <li className="content" style={{ marginTop: "5px", padding: "10px", border: "2px solid black", borderRadius: "4px", backgroundColor: "white", maxWidth: "600px", wordWrap: "break-word" }} key={comment.id}>{comment.content}</li>
                   </div>
                   {userData.admin &&
-                      <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
+                    <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
                 </div>
               ))}
             </ul>
