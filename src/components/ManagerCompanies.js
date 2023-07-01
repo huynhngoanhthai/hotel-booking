@@ -201,9 +201,9 @@ const Companies = () => {
           </button>
 
         ) : (
-          <form className="company-form" onSubmit={handleFormSubmit}>
+          <form style={{ width: "900px"}} className="company-form" onSubmit={handleFormSubmit}>
             <div className="input-row">
-              <label>Name:</label>
+              <label>Tên:</label>
               <input
                 value={nameCompany}
                 type="text"
@@ -219,7 +219,7 @@ const Companies = () => {
               />
             </div>
             <div className="input-row">
-              <label>Phone:</label>
+              <label>Điện Thoại:</label>
               <input
                 value={phoneCompany}
                 type="tel"
@@ -227,7 +227,7 @@ const Companies = () => {
               />
             </div>
             <div className="input-row">
-              <label>Address:</label>
+              <label>Địa Chỉ:</label>
               <input
                 value={addressCompany}
                 type="text"

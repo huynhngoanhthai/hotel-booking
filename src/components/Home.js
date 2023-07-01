@@ -300,7 +300,7 @@ const Home = () => {
         </button>
 
         <div className="company-details">
-          <h2>Danh Sach Hotels</h2>
+          <h2>Danh Sách Hotels</h2>
         </div>
         <div className="company-list">
           {hotelData.map((company) => (

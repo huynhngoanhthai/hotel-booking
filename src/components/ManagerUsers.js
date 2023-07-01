@@ -81,21 +81,22 @@ const ManagerUsers = () => {
                       email: event.target.value,
                     })
                   }
+                  readOnly
                 />
               </div>
               <div className="input-row">
-                <label>admin:</label>
+                <label>Quyền Hạn:</label>
                 <select
-                  defaultValue={!user.admin ? "false" : "true"}
+                  defaultValue={!user.admin ? "Quản lý" : "Người Dùng"}
                   onChange={(event) =>
                     debouncedEditCompany({
                       ...user,
                       admin: event.target.value,
                     })
                   }
+                  aria-readonly
                 >
-                  <option value="false">False</option>
-                  <option value="true">True</option>
+                  <option value="false">{user.admin ? "Quản lý" : "Người Dùng"}</option>
                 </select>
               </div>
               <button className="delete-button" onClick={() => deleteCompany(user)}>

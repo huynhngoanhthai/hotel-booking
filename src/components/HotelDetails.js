@@ -43,7 +43,7 @@ const CompanyDetails = () => {
         setHotelData(response.data);
         setRoomData(response.data.rooms);
         setTypeRoomData(response.data.typeRooms);
-        setCommentData(response.data.comments.slice().sort((a, b) => a.id - b.id));
+        setCommentData(response.data.comments.slice().sort((a, b) => b.id - a.id));
         const res = await instance.get("users/me");
         setUserData(res.data);
         console.log(response.data.typeRooms);
@@ -249,9 +249,15 @@ const CompanyDetails = () => {
         <div className="company-details">
           <h2>Bình Luận Của Khách Sạn</h2>
           <ul className="comment-item">
-            {commentData.slice(-10).map(comment => (
+            {commentData.slice().map(comment => (
               <div className="comment-wrapper">
-                <li key={comment.id}>{comment.content}</li>{
+                <div>{comment.user.name}
+
+                  <li style={{ overflow: "hidden", marginTop: "5px", marginBottom: "5px", padding: "10px", border: "2px solid black", borderRadius: "4px", backgroundColor: "white", maxWidth: "400px", wordWrap: "break-word" }} >{comment.content}</li>
+
+                </div>
+
+                {
                   <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
               </div>
             ))}
@@ -472,7 +478,7 @@ const CompanyDetails = () => {
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmitAddNewTypeRoom}>
             <div className="input-row">
-            <h2> Thêm Loại Phòng</h2>
+              <h2> Thêm Loại Phòng</h2>
               <label>Tên:</label>
               <input
                 value={nameTypeRoom}

@@ -51,7 +51,7 @@ const HistoryBooking = () => {
             alert(error.response?.data.message || error.message);
         }
     }
-    const cancelHistoryBook = async(booking_id) => {
+    const cancelHistoryBook = async (booking_id) => {
         const body = {
             status: "cancel"
         };
@@ -78,17 +78,25 @@ const HistoryBooking = () => {
             alert(error.response?.data.message || error.message);
         }
     }
-    const checkStatus = (status)=>{
-        if (status = 'new')
+    const checkStatus = (status) => {
+        if (status === 'new')
             return "new-status";
-        if (status = 'cancel')
+        if (status === 'cancel')
             return "cancel-status";
-        if (status = 'accept')
-            return "accept-accept";
-        if (status = 'reject')
-            return "cancel-accept";
-        
-
+        if (status === 'accept')
+            return "accept-status";
+        if (status === 'reject')
+            return "cancel-status";
+    };
+    const statusVN = (status) => {
+        if (status === 'new')
+            return "Mới";
+        if (status === 'cancel')
+            return "Hủy";
+        if (status === 'accept')
+            return "Chấp Nhập";
+        if (status === 'reject')
+            return "Từ Chối";
 
     }
 
@@ -104,13 +112,13 @@ const HistoryBooking = () => {
         <div >
             <Header />
             {/* <div className="company-details"> */}
-            <h2 style={{ textAlign: "center" }}>history booking</h2>
+            <h2 style={{ textAlign: "center" }}>lịch Sử  Đặt Phòng</h2>
             {/* </div > */}
             <div className="booking-list">
                 {userData.bookings.map((booking) => (
                     <div className="company-item">
                         <div className="input-row">
-                            <label>Check In :</label>
+                            <label>Ngày Đặt Phòng:</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(booking.checkInDate).toISOString().split('T')[0]}
@@ -119,7 +127,7 @@ const HistoryBooking = () => {
                         </div>
 
                         <div className="input-row">
-                            <label>Check Out :</label>
+                            <label>Ngày Trả Phòng:</label>
                             <input
                                 type="date"
                                 defaultValue={new Date(booking.checkOutDate).toISOString().split('T')[0]}
@@ -128,11 +136,11 @@ const HistoryBooking = () => {
                         </div>
 
                         <div className="input-row">
-                            <label>Trạng Thái Booking:</label>
+                            <label>Trạng Thái Đặt:</label>
                             <input
                                 className={checkStatus(booking.status)}
                                 type="text"
-                                value={booking.status}
+                                value={statusVN(booking.status)}
                                 readOnly
                             //     "
                             //     ${booking.status === 'new' ? 'new-status' : ''}

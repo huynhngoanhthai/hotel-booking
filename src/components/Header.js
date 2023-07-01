@@ -57,7 +57,7 @@ const Header = () => {
         }}
       >
         <h1
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer",paddingLeft:"20px" }}
           onClick={home}
           className="hotels-title"
         >

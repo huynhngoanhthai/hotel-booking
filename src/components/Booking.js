@@ -17,7 +17,6 @@ const Booking = () => {
   const [roomData, setRoomData] = useState(null);
   const [commentData, setCommentData] = useState(null);
   const [userData, setUserData] = useState(null);
-
   const [showForm, setShowForm] = useState(false);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
@@ -31,7 +30,7 @@ const Booking = () => {
         const response = await instance.get("/rooms/" + id);
         setRoomData(response.data);
         const res = await instance.get("/hotels/" + response.data.hotel.id);
-        setCommentData(res.data.comments.slice().sort((a, b) => a.id - b.id));
+        setCommentData(res.data.comments.slice().sort((a, b) => b.id - a.id));
         const res1 = await instance.get("/users/me");
         setUserData(res1.data);
 
@@ -101,8 +100,8 @@ const Booking = () => {
     }
   };
 
-
-  if (!roomData || !commentData || !userData) {
+  
+  if (!roomData || !commentData || !userData ) {
     return <div><Loading /></div>;
   }
 
@@ -157,8 +156,9 @@ const Booking = () => {
 
       }
       {showForm && (
-        <div className="company-list">
-          <form className="company-item" onSubmit={handleFormSubmit}>
+        <div style={{ marginTop:"10%"}} className="company-list">
+          <form className="form-booking" onSubmit={handleFormSubmit}>
+            
             <div className="input-row">
               <label>Ngày Check In :</label>
               <input
@@ -167,15 +167,59 @@ const Booking = () => {
                 onChange={(event) => setCheckInDate(event.target.value)}
               />
             </div>
+            
             <div className="input-row">
               <label>Ngày Check Out:</label>
               <input
+                style={{ cursor: "pointer"}}
 
-                value={checkOutDate}
                 type="date"
                 onChange={(event) => setCheckOutDate(event.target.value)}
               />
             </div>
+            <div className="input-row">
+              <label>Người Đặt:</label>
+              <input
+                value={userData.name}
+                style={{ cursor: "pointer"}}
+
+                type="text"
+                readOnly
+              />
+            </div>
+
+            <div className="input-row">
+              <label>Phòng Đặt:</label>
+              <input
+                style={{ cursor: "pointer"}}
+
+                value={roomData.name}
+                type="text"
+                readOnly
+              />
+            </div>
+
+
+            <div className="input-row">
+              <label>Loại Phòng:</label>
+              <input
+                style={{ cursor: "pointer"}}
+                value={roomData.typeRoom.name}
+                type="text"
+                readOnly
+              />
+            </div>
+
+            <div className="input-row">
+              <label>Giá:</label>
+              <input
+                style={{ cursor: "pointer"}}
+                value={roomData.typeRoom.price}
+                type="text"
+                readOnly
+              />
+            </div>
+
             <button type="submit" className="update-button">
               Lưu
             </button>

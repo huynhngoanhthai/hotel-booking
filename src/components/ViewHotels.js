@@ -114,8 +114,8 @@ const ViewHotels = () => {
 
                                         {hotelsData.comments.slice().sort((a, b) => b.id - a.id).map(comment => (
                                             <div className="comment-wrapper">
-                                                <div>{comment.user.name}
-                                                <li style={{ marginTop: "5px",padding: "10px", border: "2px solid black",borderRadius:"4px", backgroundColor: "white", maxWidth: "400px", wordWrap: "break-word" }}className="content" key={comment.id}>{comment.content}</li>
+                                                <div> <p style={{fontWeight:"bold", fontStyle:"13"}}>{comment.user.name}</p>
+                                                <li style={{ marginTop: "5px", marginBottom: "5px",padding: "10px", border: "2px solid black",borderRadius:"4px", backgroundColor: "white", maxWidth: "400px", wordWrap: "break-word" }}className="content" key={comment.id}>{comment.content}</li>
                                                 </div>
                                             </div>
                                         ))}
@@ -163,7 +163,7 @@ const ViewHotels = () => {
                                             defaultValue={!company.status ? "false" : "true"}
                                             readOnly
                                         >
-                                            <option>{!company.status ? "false" : "true"}</option>
+                                            <option>{!company.status ? "Phòng Đã Đặt" : "Phòng Trống"}</option>
                                         </select>
                                     </div>
                                     <div className="input-row">
