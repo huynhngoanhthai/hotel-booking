@@ -171,8 +171,7 @@ const CompanyDetails = () => {
         numberOfBeds: +room.numberOfBeds,
         hotelId: id.toString()
       });
-      const updateData = typeRoomData.map(c => c.id === room.id ? response.data : c);
-      setTypeRoomData([...updateData, response.data]);
+      
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);
@@ -188,7 +187,6 @@ const CompanyDetails = () => {
         status: room.status === "true" ? true : false,
         typeRoomId: room.typeRoom.id.toString(),
         hotelId: id.toString(),
-
       });
     } catch (error) {
       console.log(error.response.data.message);

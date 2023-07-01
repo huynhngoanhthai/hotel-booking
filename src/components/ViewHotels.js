@@ -99,7 +99,7 @@ const ViewHotels = () => {
                             <img className="image-room" src={images[(id % 6)]} alt="Room" />
                         </div>
                         <div className="room-details">
-                            <h2>Thông tin công ty</h2>
+                            <h2>Thông tin tiết khách sạn</h2>
                             <p className="details-wrapper"><strong>ID:</strong> {hotelsData.id}</p>
                             <p className="details-wrapper" ><strong>Tên:</strong> {hotelsData.name}</p>
                             <p className="details-wrapper" ><strong>Email:</strong> {hotelsData.email}</p>
@@ -131,7 +131,7 @@ const ViewHotels = () => {
                     <button class="btn" onClick={optionSuggest4}> Trên 300$
                     </button>
 
-                    <div style={{ marginTop: "5px" }} className="company-details">
+                    <div style={{ marginTop: "5px",marginBottom:"10px" }} className="company-details">
                         <h2>Danh Sách Phòng</h2>
                     </div>
                     <div className="company-list">

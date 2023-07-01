@@ -61,7 +61,7 @@ const Home = () => {
 
   const viewHotel = async (hotel) => {
     try {
-      navigate("/view-hotels/"+hotel.id);
+      navigate("/view-hotels/" + hotel.id);
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);
@@ -69,7 +69,7 @@ const Home = () => {
   }
   const viewCompanies = async (companies) => {
     try {
-      navigate("/view-companies/"+ companies.id);
+      navigate("/view-companies/" + companies.id);
       // setUseData(response.data.rooms);
     } catch (error) {
       console.log(error);
@@ -104,6 +104,35 @@ const Home = () => {
 
   }
 
+
+  const optionSuggestHotels1 = () => {
+    const filteredData = hotelDataOrigin.filter((item) =>
+      item.typeRooms.filter((item) => item.price <= 100).length == 0 ? false : true
+    );
+    console.log(filteredData);
+    setHotelData(filteredData);
+  }
+  const optionSuggestHotels2 = () => {
+    const filteredData = hotelDataOrigin.filter((item) =>
+      item.typeRooms.filter((item) => item.price > 100 && item.price <= 200).length == 0 ? false : true
+    );
+    setHotelData(filteredData);
+  }
+  const optionSuggestHotels3 = () => {
+
+    const filteredData = hotelDataOrigin.filter((item) =>
+      item.typeRooms.filter((item) => item.price > 200 && item.price <= 300).length == 0 ? false : true
+    );
+
+    setHotelData(filteredData);
+  }
+  const optionSuggestHotels4 = () => {
+    const filteredData = hotelDataOrigin.filter((item) =>
+      item.typeRooms.filter((item) => item.price > 300).length == 0 ? false : true
+    );
+    setHotelData(filteredData);
+  }
+
   const optionSuggest1 = () => {
     const filteredData = useDataOrigin.filter((item) =>
       item.typeRoom.price <= 100
@@ -112,13 +141,13 @@ const Home = () => {
   }
   const optionSuggest2 = () => {
     const filteredData = useDataOrigin.filter((item) =>
-      item.typeRoom.price > 100 &&  item.typeRoom.price <= 200
+      item.typeRoom.price > 100 && item.typeRoom.price <= 200
     );
     setUseData(filteredData);
   }
   const optionSuggest3 = () => {
     const filteredData = useDataOrigin.filter((item) =>
-      item.typeRoom.price > 200 &&  item.typeRoom.price <= 300
+      item.typeRoom.price > 200 && item.typeRoom.price <= 300
     );
     setUseData(filteredData);
   }
@@ -261,6 +290,15 @@ const Home = () => {
             onKeyDown={(event) => event.keyCode === 13 ? searchHotels(contentHotels) : undefined}
           />
         </div>
+        <button class="btn" onClick={optionSuggestHotels1}> dưới 100$
+        </button>
+        <button class="btn" onClick={optionSuggestHotels2}> từ 100$ - 200$
+        </button>
+        <button class="btn" onClick={optionSuggestHotels3}> từ 200$ - 300$
+        </button>
+        <button class="btn" onClick={optionSuggestHotels4}> Trên 300$
+        </button>
+
         <div className="company-details">
           <h2>Danh Sach Hotels</h2>
         </div>
@@ -331,7 +369,7 @@ const Home = () => {
         </button>
         <button class="btn" onClick={optionSuggest4}> Trên 300$
         </button>
-        
+
         <div className="company-details">
           <h2>Danh Sách Phòng</h2>
         </div>
