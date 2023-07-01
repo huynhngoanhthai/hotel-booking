@@ -21,8 +21,8 @@ const Home = () => {
 
   const [showCatalog, setShowCatalog] = useState(false);
   const [showCompanies, setShowCompanies] = useState(false);
-  const [showHotels, setShowHotels] = useState(false);
-  const [showRooms, setShowRooms] = useState(true);
+  const [showHotels, setShowHotels] = useState(true);
+  const [showRooms, setShowRooms] = useState(false);
   const [contentCompanies, setContentCompanies] = useState("");
   const [contentHotels, setContentHotels] = useState("");
   const [contentRooms, setContentRooms] = useState("");
@@ -61,8 +61,7 @@ const Home = () => {
 
   const viewHotel = async (hotel) => {
     try {
-      const response = await instance.get("/hotels/" + hotel.id);
-      // setUseData(response.data.rooms);
+      navigate("/view-hotels/"+hotel.id);
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);
@@ -332,6 +331,7 @@ const Home = () => {
         </button>
         <button class="btn" onClick={optionSuggest4}> Trên 300$
         </button>
+        
         <div className="company-details">
           <h2>Danh Sách Phòng</h2>
         </div>

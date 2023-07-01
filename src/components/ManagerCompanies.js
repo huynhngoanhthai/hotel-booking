@@ -114,17 +114,16 @@ const Companies = () => {
     setShowForm(false); // Ẩn form sau khi lưu thông tin
   };
 
-  if (!useData ||  !userData) {
+  if (!useData || !userData) {
     return <div><Loading /></div>;
   }
-  if(!userData.admin)
-  {
+  if (!userData.admin) {
     navigate("/home ");
   }
   return (
     <div>
       <Header />
-      
+
       <div className="company-list">
         {!showForm &&
           useData.map((company) => (
@@ -193,12 +192,14 @@ const Companies = () => {
             </div>
           ))}
       </div>
-    
+
       <div className="add-button-container">
         {!showForm ? (
-          <button className="add-button" onClick={addCompany}>
-            Thêm công ty
+          <button type="button" class="button" onClick={addCompany}>
+            <span class="button__text">Thêm</span>
+            <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
           </button>
+
         ) : (
           <form className="company-form" onSubmit={handleFormSubmit}>
             <div className="input-row">

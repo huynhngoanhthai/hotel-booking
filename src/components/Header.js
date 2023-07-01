@@ -11,7 +11,7 @@ const Header = () => {
   const [isAvatarActive, setAvatarActive] = useState(false);
   const navigate = useNavigate();
 
-  const toggleList = async() => {
+  const toggleList = async () => {
     try {
       const response = await instance.get("/users/me");
       setUserData(response.data);
@@ -21,7 +21,7 @@ const Header = () => {
       alert("ban chua login");
       navigate("/login");
     }
-  
+
   };
   const clickLogout = async () => {
     try {
@@ -74,10 +74,12 @@ const Header = () => {
       {isListVisible && (
         <ul className="list">
           <li onClick={profile}>Hồ sơ cá nhân</li>
-          {userData?.admin &&  <li onClick={manager}>Quản lý</li>}
-          {userData?.admin &&  <li onClick={managerUsers}>Quản lý user</li>}
+          {userData?.admin && <li onClick={manager}>Quản lý</li>}
+          {userData?.admin && <li onClick={managerUsers}>Quản lý user</li>}
           <li onClick={historyBooking}>lịch sử Booking</li>
-          <li onClick={clickLogout}>đăng xuất</li>
+          <li onClick={clickLogout}>
+            Đăng Xuất
+          </li>
         </ul>
       )}
     </header>

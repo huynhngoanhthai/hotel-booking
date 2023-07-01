@@ -156,7 +156,7 @@ const Register = () => {
         </div>
 
         <button id="button"  type="submit">Dăng Ký</button>
-        <a class="forgotLink" href="/#" onClick={handleLogin}>Bạn chưa có tài khoản?</a>
+        <a class="forgotLink" href="/#" onClick={handleLogin}>Bạn đã có tài khoản?</a>
       </form>
     </div>
   );

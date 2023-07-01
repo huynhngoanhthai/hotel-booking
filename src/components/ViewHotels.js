@@ -16,6 +16,8 @@ const images = [
 ];
 const ViewHotels = () => {
     const [hotelsData, setHotelsData] = useState(null);
+    const [roomData, setRoomDataTemp] = useState(null);
+
     const navigate = useNavigate();
 
 
@@ -28,6 +30,8 @@ const ViewHotels = () => {
             try {
                 const response = await instance.get("/hotels/" + id);
                 setHotelsData(response.data);
+
+                setRoomDataTemp(response.data.rooms)
                 console.log(response.data);
             } catch (error) {
                 console.log(error);
@@ -41,12 +45,42 @@ const ViewHotels = () => {
         return () => {
             clearTimeout(delay);
         };
-        
+
     }, [id]);
 
     const viewRoom = (room) => {
         navigate("/manager/booking/" + room.id)
-      }    
+    }
+
+    const optionSuggest1 = () => {
+        const filteredData = hotelsData.rooms.filter((item) =>
+            item.typeRoom.price <= 100
+        );
+        setRoomDataTemp(filteredData);
+    }
+    const optionSuggest2 = () => {
+        const filteredData = hotelsData.rooms.filter((item) =>
+            item.typeRoom.price > 100 && item.typeRoom.price <= 200
+        );
+        console.log(filteredData);
+        setRoomDataTemp(filteredData);
+    }
+    const optionSuggest3 = () => {
+        const filteredData = hotelsData.rooms.filter((item) =>
+            item.typeRoom.price > 200 && item.typeRoom.price <= 300
+        );
+        setRoomDataTemp(filteredData);
+    }
+    const optionSuggest4 = () => {
+        const filteredData = hotelsData.rooms.filter((item) =>
+            item.typeRoom.price > 300
+        );
+        setRoomDataTemp(filteredData);
+    }
+
+
+
+
     if (!hotelsData) {
         return (
             <>
@@ -87,12 +121,22 @@ const ViewHotels = () => {
                             }
                         </div>
                     </div>
+
+                    <button class="btn" onClick={optionSuggest1}> dưới 100$
+                    </button>
+                    <button class="btn" onClick={optionSuggest2}> từ 100$ - 200$
+                    </button>
+                    <button class="btn" onClick={optionSuggest3}> từ 200$ - 300$
+                    </button>
+                    <button class="btn" onClick={optionSuggest4}> Trên 300$
+                    </button>
+
                     <div style={{ marginTop: "5px" }} className="company-details">
                         <h2>Danh Sách Phòng</h2>
                     </div>
                     <div className="company-list">
                         {
-                            hotelsData.rooms.map((company) => (
+                            roomData.map((company) => (
                                 <div key={company.id} className="company-item">
                                     <div className="input-row">
                                         <label>Tên:</label>
@@ -129,7 +173,28 @@ const ViewHotels = () => {
                                             </option>
 
                                         </select>
+                                    </div>
 
+                                    <div className="input-row">
+                                        <label>Giá:</label>
+                                        <input
+                                            defaultValue={company.typeRoom.price}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className="input-row">
+                                        <label>Số Người Ở:</label>
+                                        <input
+                                            defaultValue={company.typeRoom.numberOfPeople}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className="input-row">
+                                        <label>Số Giường Ngủ:</label>
+                                        <input
+                                            defaultValue={company.typeRoom.numberOfBeds}
+                                            readOnly
+                                        />
                                     </div>
                                     <button className="view-button" onClick={() => { viewRoom(company) }}>
                                         Xem
