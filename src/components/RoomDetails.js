@@ -3,6 +3,7 @@ import instance from "../utils/instance";
 import "../styles/room.css";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 
 const RoomDetails = () => {
     const [roomData, setRoomData] = useState(null);
@@ -24,7 +25,7 @@ const RoomDetails = () => {
 
   
   if (!roomData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   } 
 
   return (

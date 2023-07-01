@@ -4,6 +4,7 @@ import instance from "../utils/instance";
 import "../styles/Manager.css";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 
 const ManagerUsers = () => {
   const [useData, setUseData] = useState(null);
@@ -57,7 +58,7 @@ const ManagerUsers = () => {
 
 
   if (!useData || !userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
   if (!userData.admin) {
     navigate("/home ");

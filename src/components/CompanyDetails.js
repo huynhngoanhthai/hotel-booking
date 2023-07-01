@@ -4,6 +4,7 @@ import "../styles/Manager.css";
 import { debounce } from "lodash";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 
 const CompanyDetails = () => {
   const [userData, setUserData] = useState(null);
@@ -118,19 +119,19 @@ const CompanyDetails = () => {
   };
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
 
   return (
     <div>
       <Header />
       <div className="company-details">
-        <h2>Company Details</h2>
+        <h2>Thông Tin Chi Tiết Công Ty</h2>
           <p><strong>ID:</strong> {userData.id}</p> 
-          <p><strong>Name:</strong> {userData.name}</p> 
+          <p><strong>Tên:</strong> {userData.name}</p> 
           <p><strong>Email:</strong> {userData.email}</p> 
-          <p><strong>Phone:</strong> {userData.phone}</p> 
-          <p><strong>Address:</strong> {userData.address}</p> 
+          <p><strong>Điện Thoại:</strong> {userData.phone}</p> 
+          <p><strong>Địa Chỉ:</strong> {userData.address}</p> 
         <button className="view-button" onClick={addHotels}>
           thêm khách sạn
         </button>
@@ -140,7 +141,7 @@ const CompanyDetails = () => {
           hotelData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -166,7 +167,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Phone:</label>
+                <label>Điện Thoại:</label>
                 <input
                   type="tel"
                   defaultValue={company.phone}
@@ -179,7 +180,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Address:</label>
+                <label>Địa Chỉ:</label>
                 <input
                   type="text"
                   defaultValue={company.address}
@@ -201,13 +202,14 @@ const CompanyDetails = () => {
                 Xóa
               </button>
             </div>
-          ))}
+          ))
+          }
       </div>
       {showForm && (
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmit}>
             <div className="input-row">
-              <label>Name:</label>
+              <label>Tên:</label>
               <input
                 value={nameHotel}
                 type="text"
@@ -223,7 +225,7 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>Phone:</label>
+              <label>Điện Thoại:</label>
               <input
                 value={phoneHotel}
                 type="tel"
@@ -231,7 +233,7 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>Address:</label>
+              <label>Địa Chỉ:</label>
               <input
                 value={addressHotel}
                 type="text"

@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import "../styles/Manager.css";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 
 const Companies = () => {
   const [useData, setUseData] = useState(null);
@@ -114,7 +115,7 @@ const Companies = () => {
   };
 
   if (!useData ||  !userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
   if(!userData.admin)
   {
@@ -129,7 +130,7 @@ const Companies = () => {
           useData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -155,7 +156,7 @@ const Companies = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Phone:</label>
+                <label>Điện Thoại:</label>
                 <input
                   type="tel"
                   defaultValue={company.phone}
@@ -168,7 +169,7 @@ const Companies = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Address:</label>
+                <label>Địa Chỉ:</label>
                 <input
                   type="text"
                   defaultValue={company.address}

@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import "../styles/Manager.css";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 
 const Companies = () => {
   const [userData, setUserData] = useState(null);
@@ -112,7 +113,7 @@ const Companies = () => {
   };
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
 
   return (

@@ -1,198 +1,210 @@
 .room-details {
-    /* min-width: 43.1%;
+  /* min-width: 43.1%;
     min-height: 50%; */
-    min-width: 45%;
-    min-height: 650px;
-    margin-left: 2.5%;
-    /* margin-right:    px; */
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+  min-width: 45%;
+  min-height: 650px;
+  margin-left: 2.5%;
+  /* margin-right:    px; */
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
 }
 
 .room-details h2 {
-    color: #333;
+  color: #333;
 }
 
 .room-details p {
-    margin: 5px 0;  
-    font-size: 1.2em;
+  margin: 5px 0;
+  font-size: 1.2em;
 }
 
 .room-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 
 .delete-icon {
-    color: #fe0000;
-    cursor: pointer;
-    margin-right: 5px;
+  color: #fe0000;
+  cursor: pointer;
+  margin-right: 5px;
 
 }
 
 .delete-icon:hover {
-    color: #670202;
-    cursor: pointer;
+  color: #670202;
+  cursor: pointer;
 }
 
 .image {
-    /* margin: 0 0 0 10px; */
-    max-width: 4000px;
-    /* Thay đổi giá trị tùy ý */
-    padding: 10px;
-    margin-right: 2.5%;
-    background-color: #f2f2f2;
-    /* margin-left: 21%; */
-    border: 1px solid #ccc;
-    margin-right: 0px;
+  /* margin: 0 0 0 10px; */
+  max-width: 45%;
+  /* Thay đổi giá trị tùy ý */
+  padding: 10px;
+  margin-right: 2.5%;
+  background-color: #f2f2f2;
+  /* margin-left: 21%; */
+  border: 1px solid #ccc;
+  margin-right: 0px;
 }
 
 .image-room {
-    /* max-width: 100%;
+  /* max-width: 100%;
     max-height: 100%; */
-    min-width: 45%;
-    
-    min-height: 650px;
+  min-width: 45%;
+
+  min-height: 650px;
 
 }
 
 .hotel-comment {
-    margin: 10px 5%;
-    width: 90%;
-    display: inline-block;
-    padding: 10px;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+  margin: 10px 5%;
+  width: 90%;
+  display: inline-block;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
 }
 
 .input-comment {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: 10px;
-    width: 92%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 10px;
+  width: 90%;
 
 }
 
 .comment-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.details-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+.details-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
 }
+
 .add-button-booking {
-    background-color: #00bcd4;
-    font-size: 1.5em;
-    font-weight:bold;
-    text-transform: uppercase;
-    color: #ffffff;
-    width: 100%;
-    margin-top: 10px;
-    padding: 20px ;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-button-booking:hover {
-    background-color: #0097a7;
-  }
-  
-  .add-button-booking:focus {
-    outline: none;
-  }
-  .image-booking {
-    min-width: 44%;
-    min-height: 830px;
-  }
+  background-color: #00bcd4;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  width: 100%;
+  margin-top: 10px;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .booking-details {
-    min-width: 44%;
-    min-height: 850px;
-    margin-right: 2.5%;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+.add-button-booking:hover {
+  background-color: #0097a7;
+}
+
+.add-button-booking:focus {
+  outline: none;
+}
+
+.image-booking {
+  min-width: 44%;
+  min-height: 830px;
+}
+
+.booking-details {
+  min-width: 44%;
+  min-height: 850px;
+  margin-right: 2.5%;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
 }
 
 .booking-details h2 {
-    color: #333;
+  color: #333;
 }
 
 .booking-details p {
-    margin: 5px 0;  
-    font-size: 1.2em;
+  margin: 5px 0;
+  font-size: 1.2em;
 }
 
 
 
 .add-button-accept {
-    background-color: #4caf50;
+  background-color: #4caf50;
 
-    font-size: 1.5em;
-    font-weight:bold;
-    text-transform: uppercase;
-    color: #ffffff;
-    width: 45%;
-    margin-top: 10px;
-    padding: 20px ;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-button-accept:hover {
-    background-color: #45a049;
-  }
-  
-  .add-button-accept:focus {
-    outline: none;
-  }
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  width: 45%;
+  margin-top: 10px;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-button-accept:hover {
+  background-color: #45a049;
+}
+
+.add-button-accept:focus {
+  outline: none;
+}
 
 
-  .add-button-accept:active {
-    background-color: #398437;
-  }
-  
+.add-button-accept:active {
+  background-color: #398437;
+}
+
 
 
 
 .add-button-reject {
-    background-color: #d32f2f;
-    font-size: 1.5em;
-    font-weight:bold;
-    text-transform: uppercase;
-    color: #ffffff;
-    width: 45%;
-    margin-top: 10px;
-    margin-left: 10%;
+  background-color: #d32f2f;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  width: 45%;
+  margin-top: 10px;
+  margin-left: 10%;
 
-    padding: 20px ;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-button-reject:hover {
-    background-color:  #d32f2f;
-  }
-  
-  .add-button-reject:focus {
-    outline: none;
-  }
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .add-button-reject:active {
-    background-color: #b71c1c;
-  }
+.add-button-reject:hover {
+  background-color: #d32f2f;
+}
+
+.add-button-reject:focus {
+  outline: none;
+}
+
+.add-button-reject:active {
+  background-color: #b71c1c;
+}
+
+.comment-content {
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comment-item {
+  max-width: 400px;
+}

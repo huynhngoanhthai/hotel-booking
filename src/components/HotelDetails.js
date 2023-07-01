@@ -5,6 +5,7 @@ import { debounce } from "lodash";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header";
 import { FaTrash } from "react-icons/fa";
+import Loading from "./loading";
 
 const CompanyDetails = () => {
   const [roomData, setRoomData] = useState(null);
@@ -218,7 +219,7 @@ const CompanyDetails = () => {
   };
 
   if (!hotelData || !userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   };
   if (!userData.admin) {
     navigate("/home");
@@ -227,12 +228,12 @@ const CompanyDetails = () => {
     <div>
       <Header />
       <div className="company-details">
-        <h2>Hotel Details</h2>
+        <h2>Thông Tin Chi Tiết Khách Sạn</h2>
         <p><strong>ID:</strong> {hotelData.id}</p>
-        <p><strong>Name:</strong> {hotelData.name}</p>
+        <p><strong>Tên:</strong> {hotelData.name}</p>
         <p><strong>Email:</strong> {hotelData.email}</p>
-        <p><strong>Phone:</strong> {hotelData.phone}</p>
-        <p><strong>Address:</strong> {hotelData.address}</p>
+        <p><strong>Điện Thoại:</strong> {hotelData.phone}</p>
+        <p><strong>Địa Chỉ:</strong> {hotelData.address}</p>
         <button className="view-button" onClick={addRoom}>
           thêm phòng
         </button>
@@ -243,7 +244,7 @@ const CompanyDetails = () => {
 
       {commentData.length !== 0 &&
         <div className="company-details">
-          <h2>Comments Hotel</h2>
+          <h2>Bình Luận Của Khách Sạn</h2>
           <ul className="comment-item">
             {commentData.slice(-10).map(comment => (
               <div className="comment-wrapper">
@@ -259,7 +260,7 @@ const CompanyDetails = () => {
           roomData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -272,7 +273,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Floor:</label>
+                <label>Tầng:</label>
                 <input
                   defaultValue={company.floor}
                   onChange={(event) =>
@@ -284,7 +285,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Status:</label>
+                <label>Trạng Thái Phòng:</label>
                 <select
                   defaultValue={!company.status ? "false" : "true"}
                   onChange={(event) =>
@@ -299,7 +300,7 @@ const CompanyDetails = () => {
                 </select>
               </div>
               <div className="input-row">
-                <label>Type Room:</label>
+                <label>Loại Phòng:</label>
                 <select
                   defaultValue={company.typeRoom.name}
                   onChange={(event) =>
@@ -330,14 +331,14 @@ const CompanyDetails = () => {
           ))}
       </div>
       <div className="company-details">
-        <h2>Danh Sach Loai Phong</h2>
+        <h2>Danh Sách Loại Phòng</h2>
       </div>
       <div className="company-list">
         {!showFormAddtypeRoom && !showForm &&
           typeRoomData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -350,7 +351,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>price:</label>
+                <label>Giá:</label>
                 <input
                   type="number"
                   defaultValue={company.price}
@@ -363,7 +364,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Number Of People:</label>
+                <label>Số Người ở:</label>
                 <input
                   type="number"
                   defaultValue={company.numberOfPeople}
@@ -377,7 +378,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Number Of Beds:</label>
+                <label>Số  Giường Ngủ:</label>
                 <input
                   type="number"
                   defaultValue={company.numberOfBeds}
@@ -405,7 +406,7 @@ const CompanyDetails = () => {
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmit}>
             <div className="input-row">
-              <label>Name:</label>
+              <label>Tên:</label>
               <input
                 value={nameRoom}
                 type="text"
@@ -413,14 +414,14 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>Floor:</label>
+              <label>Tầng:</label>
               <input
                 value={floorRoom}
                 onChange={(event) => setFloorRoom(event.target.value)}
               />
             </div>
             <div className="input-row">
-              <label>Status:</label>
+              <label>Trạng Thái Phòng:</label>
               <select
                 value={statusRoom}
                 onChange={(event) => setStatusRoom(event.target.value)}
@@ -430,7 +431,7 @@ const CompanyDetails = () => {
               </select>
             </div>
             <div className="input-row">
-              <label>Type Room:</label>
+              <label>Loại Phòng:</label>
               <select
                 value={typeRoomIndex}
                 onChange={(event) => setTypeRoomIndex(event.target.value)}
@@ -460,7 +461,7 @@ const CompanyDetails = () => {
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmitAddNewTypeRoom}>
             <div className="input-row">
-              <label>Name:</label>
+              <label>Tên:</label>
               <input
                 value={nameTypeRoom}
                 type="text"
@@ -468,7 +469,7 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>price:</label>
+              <label>Giá:</label>
               <input
                 type="number"
                 value={priceTypeRoom}
@@ -476,7 +477,7 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>Number Of People:</label>
+              <label>Số Người ở:</label>
               <input
                 type="number"
                 value={numberOfPeopleTypeRoom}
@@ -485,7 +486,7 @@ const CompanyDetails = () => {
               />
             </div>
             <div className="input-row">
-              <label>Number Of Beds:</label>
+              <label>Số Giường Ngủ:</label>
               <input
                 type="number"
                 value={numberOfBedsTypeRoom}

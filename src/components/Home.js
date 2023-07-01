@@ -5,17 +5,28 @@ import instance from "../utils/instance";
 import { useNavigate } from "react-router-dom";
 import Loading from "./loading";
 import CatalogItem from "./CatalogItem";
+import Search from "./search";
 
 
 
 const Home = () => {
   const [useData, setUseData] = useState(null);
+
   const [hotelData, setHotelData] = useState(null);
   const [companiesData, setCompaniesData] = useState(null);
+
+  const [hotelDataOrigin, setHotelDataOrigin] = useState(null);
+  const [companiesDataOrigin, setCompaniesDataOrigin] = useState(null);
+  const [useDataOrigin, setUseDataOrigin] = useState(null);
+
   const [showCatalog, setShowCatalog] = useState(false);
   const [showCompanies, setShowCompanies] = useState(false);
   const [showHotels, setShowHotels] = useState(false);
   const [showRooms, setShowRooms] = useState(true);
+  const [contentCompanies, setContentCompanies] = useState("");
+  const [contentHotels, setContentHotels] = useState("");
+  const [contentRooms, setContentRooms] = useState("");
+
 
 
   const navigate = useNavigate();
@@ -24,10 +35,13 @@ const Home = () => {
       try {
         const companies = await instance.get("/companies");
         setCompaniesData(companies.data);
+        setCompaniesDataOrigin(companies.data);
         const rooms = await instance.get("/rooms");
         setUseData(rooms.data);
+        setUseDataOrigin(rooms.data)
         const hotels = await instance.get("/hotels");
         setHotelData(hotels.data);
+        setHotelDataOrigin(hotels.data);
       } catch (error) {
         console.log(error);
       }
@@ -54,9 +68,9 @@ const Home = () => {
       alert(error.response.data.message);
     }
   }
-  const viewCompanies = async (hotel) => {
+  const viewCompanies = async (companies) => {
     try {
-      const response = await instance.get("/Companies/" + hotel.id);
+      navigate("/view-companies/"+ companies.id);
       // setUseData(response.data.rooms);
     } catch (error) {
       console.log(error);
@@ -71,21 +85,82 @@ const Home = () => {
     setShowHotels(false);
     setShowCompanies(true);
     setShowRooms(false);
-    console.log(showCompanies);
+    setShowCatalog(false);
+    setCompaniesData(companiesDataOrigin);
+    // console.log(showCompanies);
   }
   const clickedShowHotels = () => {
     setShowHotels(true);
     setShowCompanies(false);
     setShowRooms(false);
-    
-
+    setShowCatalog(false);
+    setHotelData(hotelDataOrigin);
   }
   const clickedShowRooms = () => {
     setShowRooms(true);
     setShowHotels(false);
     setShowCompanies(false);
+    setShowCatalog(false);
+    setUseDataOrigin(useDataOrigin);
+
   }
 
+  const optionSuggest1 = () => {
+    const filteredData = useDataOrigin.filter((item) =>
+      item.typeRoom.price <= 100
+    );
+    setUseData(filteredData);
+  }
+  const optionSuggest2 = () => {
+    const filteredData = useDataOrigin.filter((item) =>
+      item.typeRoom.price > 100 &&  item.typeRoom.price <= 200
+    );
+    setUseData(filteredData);
+  }
+  const optionSuggest3 = () => {
+    const filteredData = useDataOrigin.filter((item) =>
+      item.typeRoom.price > 200 &&  item.typeRoom.price <= 300
+    );
+    setUseData(filteredData);
+  }
+  const optionSuggest4 = () => {
+    const filteredData = useDataOrigin.filter((item) =>
+      item.typeRoom.price > 300
+    );
+    setUseData(filteredData);
+  }
+
+
+  const searchCompanies = (content) => {
+    if (content === "")
+      return setCompaniesData(companiesDataOrigin);
+    console.log(content);
+    const filteredData = companiesData.filter((item) =>
+      item.name.toLowerCase().includes(content.toLowerCase()) || item.address.toLowerCase().includes(content.toLowerCase())
+    );
+    setCompaniesData(filteredData);
+  }
+
+  const searchHotels = (content) => {
+    if (content === "")
+      return setHotelData(hotelDataOrigin);
+    console.log(content);
+    const filteredData = hotelData.filter((item) =>
+      item.name.toLowerCase().includes(content.toLowerCase()) || item.address.toLowerCase().includes(content.toLowerCase())
+    );
+    setHotelData(filteredData);
+
+  }
+  const searchRooms = (content) => {
+    console.log(content);
+    if (content === "")
+      return setUseData(useDataOrigin);
+    const filteredData = useData.filter((item) =>
+      item.name.toLowerCase().includes(content.toLowerCase())
+    );
+    setUseData(filteredData);
+
+  }
 
 
 
@@ -100,23 +175,40 @@ const Home = () => {
     <div>
       <Header />
       <div>
-        <h2 style={{ cursor: "pointer" }} onClick={clickedCatalog}>Catalog</h2>
+        <div style={{ cursor: "pointer" }} onClick={clickedCatalog}>
+          <h2 style={{ cursor: "pointer" }} >MENU</h2>
+        </div>
+
         {showCatalog && (
           <>
-            <div onClick={clickedShowCompanies}><CatalogItem  title="Danh Sách Công Ty" description="Hiển thị danh sách tất cả công ty" /></div>
+            <div onClick={clickedShowCompanies}><CatalogItem title="Danh Sách Công Ty" description="Hiển thị danh sách tất cả công ty" /></div>
             <div onClick={clickedShowHotels} ><CatalogItem title="Danh Sách Khách Sạn" description="Hiển thị danh sách tất cả khạch sạn" /></div>
-            <div onClick={clickedShowRooms}><CatalogItem  title="Danh Sách Phòng" description="Hiển thị danh sách tất cả phòng" /></div>
+            <div onClick={clickedShowRooms}><CatalogItem title="Danh Sách Phòng" description="Hiển thị danh sách tất cả phòng" /></div>
           </>)}
       </div>
+
       {showCompanies && !showHotels && !showRooms && <>
+        <div className="InputContainer">
+          <input
+            placeholder="Search Companies..."
+            id="input"
+            className="input"
+            name="text"
+            type="text"
+            value={contentCompanies}
+            onChange={(event) => setContentCompanies(event.target.value)}
+            onKeyDown={(event) => event.keyCode === 13 ? searchCompanies(contentCompanies) : undefined}
+          />
+        </div>
         <div className="company-details">
-          <h2>Danh Sach Công Ty</h2>
+
+          <h2>Danh Sách Công Ty</h2>
         </div>
         <div className="company-list">
           {companiesData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -132,7 +224,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Phone:</label>
+                <label>Điện thoại:</label>
                 <input
                   type="text"
                   defaultValue={company.phone}
@@ -140,7 +232,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Address:</label>
+                <label>Địa chỉ:</label>
                 <input
                   type="text"
                   defaultValue={company.address}
@@ -148,7 +240,7 @@ const Home = () => {
                 />
               </div>
 
-              <button className="view-button" onClick={() => { viewHotel(company) }}>
+              <button className="view-button" onClick={() => { viewCompanies(company) }}>
                 Xem
               </button>
 
@@ -158,6 +250,18 @@ const Home = () => {
       </>}
 
       {!showCompanies && showHotels && !showRooms && <>
+        <div className="InputContainer">
+          <input
+            placeholder="Search Hotels..."
+            id="input"
+            className="input"
+            name="text"
+            type="text"
+            value={contentHotels}
+            onChange={(event) => setContentHotels(event.target.value)}
+            onKeyDown={(event) => event.keyCode === 13 ? searchHotels(contentHotels) : undefined}
+          />
+        </div>
         <div className="company-details">
           <h2>Danh Sach Hotels</h2>
         </div>
@@ -165,7 +269,7 @@ const Home = () => {
           {hotelData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -181,7 +285,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Phone:</label>
+                <label>Điện Thoại:</label>
                 <input
                   type="text"
                   defaultValue={company.phone}
@@ -189,7 +293,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label>Address:</label>
+                <label>Địa chỉ:</label>
                 <input
                   type="text"
                   defaultValue={company.address}
@@ -207,14 +311,35 @@ const Home = () => {
       </>}
 
       {!showCompanies && !showHotels && showRooms && <>
+        <div className="InputContainer">
+          <input
+            placeholder="Search Rooms..."
+            id="input"
+            className="input"
+            name="text"
+            type="text"
+            value={contentRooms}
+            onChange={(event) => setContentRooms(event.target.value)}
+            onKeyDown={(event) => event.keyCode === 13 ? searchRooms(contentRooms) : undefined}
+          />
+        </div>
+
+        <button class="btn" onClick={optionSuggest1}> dưới 100$
+        </button>
+        <button class="btn" onClick={optionSuggest2}> từ 100$ - 200$
+        </button>
+        <button class="btn" onClick={optionSuggest3}> từ 200$ - 300$
+        </button>
+        <button class="btn" onClick={optionSuggest4}> Trên 300$
+        </button>
         <div className="company-details">
-          <h2>Danh Sach Phong</h2>
+          <h2>Danh Sách Phòng</h2>
         </div>
         <div className="company-list">
           {useData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
-                <label>Name:</label>
+                <label>Tên:</label>
                 <input
                   type="text"
                   defaultValue={company.name}
@@ -222,7 +347,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label > Floor:</label>
+                <label > Tầng:</label>
                 <input
                   type="text"
                   defaultValue={company.floor}
@@ -231,7 +356,7 @@ const Home = () => {
               </div>
 
               <div className="input-row">
-                <label > Status:</label>
+                <label > Trạng Thái Phòng:</label>
                 <input
                   type="text"
                   defaultValue={company.status}
@@ -239,7 +364,7 @@ const Home = () => {
                 />
               </div>
               <div className="input-row">
-                <label > Type Room:</label>
+                <label > Loại Phòng:</label>
                 <input
                   type="text"
                   defaultValue={company.typeRoom.name}
@@ -248,7 +373,7 @@ const Home = () => {
               </div>
 
               <div className="input-row">
-                <label > Price:</label>
+                <label > Giá:</label>
                 <input
                   type="text"
                   defaultValue={company.typeRoom.price}
@@ -257,7 +382,7 @@ const Home = () => {
               </div>
 
               <div className="input-row">
-                <label > Number Of Beds:</label>
+                <label > Số Giường Ngủ:</label>
                 <input
                   type="text"
                   defaultValue={company.typeRoom.numberOfBeds}
@@ -266,7 +391,7 @@ const Home = () => {
               </div>
 
               <div className="input-row">
-                <label > Number Of People:</label>
+                <label > Số Người ở:</label>
                 <input
                   type="text"
                   defaultValue={company.typeRoom.numberOfPeople}

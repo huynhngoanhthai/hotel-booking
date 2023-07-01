@@ -4,6 +4,7 @@ import instance from "../utils/instance";
 import "../styles/Booking.css";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
+import Loading from "./loading";
 const images = [
   require("../img/r1.jpg"),
   require("../img/r2.jpg"),
@@ -102,7 +103,7 @@ const Booking = () => {
 
 
   if (!roomData || !commentData || !userData) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
 
   return (
@@ -115,23 +116,24 @@ const Booking = () => {
             <img className="image-room" src={images[(roomData.id % 6)]} alt="Room" />
           </div>
           <div className="room-details">
-            <h2>Room Details</h2>
+            <h2>Thông Tin Chi Tiết Phòng</h2>
             <p className="details-wrapper"><strong>ID:</strong> {roomData.id}</p>
-            <p className="details-wrapper" ><strong>Name:</strong> {roomData.name}</p>
-            <p className="details-wrapper" ><strong>Floor:</strong> {roomData.floor} 🏢</p>
-            <p className="details-wrapper" ><strong>Status:</strong> {roomData.status ? 'True' : 'False'}</p>
-            <p className="details-wrapper" ><strong>Type Room:</strong> {roomData.typeRoom.name}</p>
-            <p className="details-wrapper" ><strong>Price:</strong> {roomData.typeRoom.price}$ 💰</p>
-            <p className="details-wrapper" ><strong>Number of people:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
-            <p className="details-wrapper" ><strong>Number of beds:</strong>    {roomData.typeRoom.numberOfBeds}   🛏️</p>
-            <p className="details-wrapper" ><strong>Hotel:</strong> {roomData.hotel.name} 🏨</p>
-            <p className="details-wrapper" ><strong>Address Hotel:</strong> {roomData.hotel.address} 📍</p>
-            <button className="add-button-booking" onClick={addBooking}> Booking</button>
+            <p className="details-wrapper" ><strong>Tên:</strong> {roomData.name}</p>
+            <p className="details-wrapper" ><strong>Tầng:</strong> {roomData.floor} 🏢</p>
+            <p className="details-wrapper" ><strong>Trạng Thái Phòng:</strong> {roomData.status ? 'True' : 'False'}</p>
+            <p className="details-wrapper" ><strong>Loại Phòng:</strong> {roomData.typeRoom.name}</p>
+            <p className="details-wrapper" ><strong>Giá:</strong> {roomData.typeRoom.price}$ 💰</p>
+            <p className="details-wrapper" ><strong>Số Người ở:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
+            <p className="details-wrapper" ><strong>Số  Giường Ngủ:</strong>    {roomData.typeRoom.numberOfBeds}   🛏️</p>
+            <p className="details-wrapper" ><strong>Khách Sạn:</strong> {roomData.hotel.name} 🏨</p>
+            <p className="details-wrapper" ><strong>Địa Chỉ:</strong> {roomData.hotel.address} 📍</p>
+            <button className="add-button-booking" onClick={addBooking}> Đặt Phòng</button>
           </div>
 
 
-        </div><div className="hotel-comment">
-            <h2>Comments Hotel</h2>
+        </div>
+          <div className="hotel-comment">
+            <h2>Bình Luận Về Khách Sạn</h2>
             <ul>
               {commentData.slice(-20).map(comment => (
                 <div className="comment-wrapper">
@@ -145,8 +147,9 @@ const Booking = () => {
               value={content}
               onChange={(event) => setContent(event.target.value)}
               onKeyDown={(event) => event.keyCode === 13 ? addComment() : undefined} />
-            <button className="add-button" onClick={addComment}> comment</button>
-          </div></>
+            <button className="add-button" onClick={addComment}>Bình Luận</button>
+          </div>
+        </>
       )
 
       }
@@ -154,7 +157,7 @@ const Booking = () => {
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmit}>
             <div className="input-row">
-              <label>Check In Date:</label>
+              <label>Ngày Check In :</label>
               <input
                 value={checkInDate}
                 type="date"
@@ -162,7 +165,7 @@ const Booking = () => {
               />
             </div>
             <div className="input-row">
-              <label>Check On Date:</label>
+              <label>Ngày Check Out:</label>
               <input
 
                 value={checkOutDate}
@@ -185,7 +188,7 @@ const Booking = () => {
 
 
 
-       
+
       )}
 
 

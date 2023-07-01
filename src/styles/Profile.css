@@ -51,12 +51,14 @@
 }
 
 /*css cong ty*/
-.company-list {
+.booking-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  align-content: center;
   align-items: center;
+  justify-content: center;
 }
+
 
 .company-item {
   width: 300px;
@@ -226,4 +228,17 @@
 .company-details p  .company-prototies{
   display: inline;
   font-weight: bold;
+}
+
+
+.new-status {
+  background-color: rgb(130, 245, 130);
+}
+
+.cancel-status {
+  background-color: rgb(255, 74, 74);
+}
+
+.accept-status {
+  background-color: rgb(0, 247, 255);
 }
