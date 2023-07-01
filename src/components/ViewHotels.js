@@ -110,12 +110,16 @@ const ViewHotels = () => {
                             {hotelsData.comments.length !== 0 &&
                                 <div className="details-wrapper">
                                     <h2>Bình luận khách sạn</h2>
-                                    <ul className="comment-item">
-                                        {hotelsData.comments.slice().sort((a, b) => a.id - b.id).slice(-8).map(comment => (
+                                    <ul className="comment-item-hotels">
+
+                                        {hotelsData.comments.slice().sort((a, b) => b.id - a.id).map(comment => (
                                             <div className="comment-wrapper">
-                                                <li className="comment-content" key={comment.id}>{comment.content}</li>
+                                                <div>{comment.user.name}
+                                                <li style={{ marginTop: "5px",padding: "10px", border: "2px solid black",borderRadius:"4px", backgroundColor: "white", maxWidth: "400px", wordWrap: "break-word" }}className="content" key={comment.id}>{comment.content}</li>
+                                                </div>
                                             </div>
                                         ))}
+
                                     </ul>
                                 </div>
                             }

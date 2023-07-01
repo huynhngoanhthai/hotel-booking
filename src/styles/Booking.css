@@ -66,6 +66,7 @@
   padding: 10px;
   background-color: #f2f2f2;
   border: 1px solid #ccc;
+
 }
 
 .input-comment {
@@ -83,6 +84,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+
 }
 
 .details-wrapper {
@@ -205,6 +208,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.comment-item {
-  max-width: 400px;
+.comment-item-hotels {
+  max-height: 190px;
+  max-width: 600px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.content{
+  overflow: hidden;
+
 }

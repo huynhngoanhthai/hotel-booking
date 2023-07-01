@@ -137,8 +137,11 @@ const Booking = () => {
             <ul>
               {commentData.slice(-20).map(comment => (
                 <div className="comment-wrapper">
-                  <li key={comment.id}>{comment.content}</li>{userData.admin &&
-                    <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
+                  <div>{comment.user.name}
+                    <li  className="content" style={{ marginTop: "5px",padding: "10px", border: "2px solid black",borderRadius:"4px", backgroundColor: "white", maxWidth: "600px", wordWrap: "break-word" }} key={comment.id}>{comment.content}</li>
+                  </div>
+                  {userData.admin &&
+                      <FaTrash className="delete-icon" onClick={() => deleteComment(comment.id)} />}
                 </div>
               ))}
             </ul>

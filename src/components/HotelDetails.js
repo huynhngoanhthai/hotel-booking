@@ -171,7 +171,7 @@ const CompanyDetails = () => {
         numberOfBeds: +room.numberOfBeds,
         hotelId: id.toString()
       });
-      
+
     } catch (error) {
       console.log(error);
       alert(error.response.data.message);
@@ -232,12 +232,17 @@ const CompanyDetails = () => {
         <p><strong>Email:</strong> {hotelData.email}</p>
         <p><strong>Điện Thoại:</strong> {hotelData.phone}</p>
         <p><strong>Địa Chỉ:</strong> {hotelData.address}</p>
-        <button className="view-button" onClick={addRoom}>
-          thêm phòng
+
+        <button style={{ marginTop: "10px" }} type="button" class="button" onClick={addRoom}>
+          <span class="button__text">Thêm Phòng</span>
+          <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
         </button>
-        <button className="view-button" onClick={addTypeRoom}>
-          thêm loại phòng
+
+        <button style={{ marginTop: "10px" }} type="button" class="button" onClick={addTypeRoom}>
+          <span class="button__text"> thêm loại phòng</span>
+          <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
         </button>
+
       </div>
 
       {commentData.length !== 0 &&
@@ -328,11 +333,15 @@ const CompanyDetails = () => {
             </div>
           ))}
       </div>
-      <div className="company-details">
-        <h2>Danh Sách Loại Phòng</h2>
-      </div>
+      {!showFormAddtypeRoom && !showForm &&
+        (<div className="company-details">
+          <h2>Danh Sách Loại Phòng</h2>
+        </div>)
+      }
       <div className="company-list">
+
         {!showFormAddtypeRoom && !showForm &&
+
           typeRoomData.map((company) => (
             <div key={company.id} className="company-item">
               <div className="input-row">
@@ -397,13 +406,17 @@ const CompanyDetails = () => {
                 Xóa
               </button>
             </div>
-          ))}
+          ))
+
+
+        }
       </div>
 
       {!showFormAddtypeRoom && showForm && (
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmit}>
             <div className="input-row">
+              <h2> Thêm Phòng</h2>
               <label>Tên:</label>
               <input
                 value={nameRoom}
@@ -459,6 +472,7 @@ const CompanyDetails = () => {
         <div className="company-list">
           <form className="company-item" onSubmit={handleFormSubmitAddNewTypeRoom}>
             <div className="input-row">
+            <h2> Thêm Loại Phòng</h2>
               <label>Tên:</label>
               <input
                 value={nameTypeRoom}
