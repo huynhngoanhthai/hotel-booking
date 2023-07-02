@@ -121,7 +121,7 @@ const HistoryBooking = () => {
         <div >
             <Header />
             {/* <div className="company-details"> */}
-            <h2 style={{ textAlign: "center" }}>lịch Sử  Đặt Phòng</h2>
+            <h2 style={{ textAlign: "center" }}>Lịch Sử  Đặt Phòng</h2>
             {/* </div > */}
             <div className="booking-list">
                 {userData.bookings.map((booking) => (

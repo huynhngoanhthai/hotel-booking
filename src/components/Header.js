@@ -76,7 +76,7 @@ const Header = () => {
           <li onClick={profile}>Hồ sơ cá nhân</li>
           {userData?.admin && <li onClick={manager}>Quản lý</li>}
           {userData?.admin && <li onClick={managerUsers}>Quản lý user</li>}
-          <li onClick={historyBooking}>lịch sử Booking</li>
+          <li onClick={historyBooking}>Lịch sử Booking</li>
           <li onClick={clickLogout}>
             Đăng Xuất
           </li>
