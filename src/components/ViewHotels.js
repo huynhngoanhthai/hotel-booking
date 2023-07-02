@@ -160,7 +160,7 @@ const ViewHotels = () => {
                                     <div className="input-row">
                                         <label>Trạng Thái phòng:</label>
                                         <select
-                                            defaultValue={!company.status ? "false" : "true"}
+                                            defaultValue={!company.status ? 'Phòng Trống' : 'Hết Phòng'}
                                             readOnly
                                         >
                                             <option>{!company.status ? "Phòng Đã Đặt" : "Phòng Trống"}</option>

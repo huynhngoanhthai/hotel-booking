@@ -397,7 +397,7 @@ const Home = () => {
                 <label > Trạng Thái Phòng:</label>
                 <input
                   type="text"
-                  defaultValue={company.status}
+                  defaultValue={company.status ? 'Phòng Trống' : 'Hết Phòng'}
                   readOnly
                 />
               </div>

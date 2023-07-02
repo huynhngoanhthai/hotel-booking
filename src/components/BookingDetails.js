@@ -106,18 +106,18 @@ const BookingDetails = () => {
                         <img className="image-booking" src={images[(roomData?.id % 6)]} alt="Room" />
                     </div>
                     <div className="booking-details">
-                        <h2>Booking Details</h2>
+                        <h2 style={{marginLeft:"10px"}}> Thông Tin Đặt Phòng </h2>
                         <p className="details-wrapper"><strong>ID:</strong> {roomData?.id}</p>
                         <p className="details-wrapper" ><strong>tên phòng:</strong> {roomData?.name}</p>
                         <p className="details-wrapper" ><strong>Tầng:</strong> {roomData?.floor} 🏢</p>
-                        <p className="details-wrapper" ><strong>trạng thái phòng:</strong> {roomData?.status ? 'True' : 'False'}</p>
+                        <p className="details-wrapper" ><strong>trạng thái phòng:</strong> {roomData?.status ? 'Phòng Trống' : 'Hết Phòng'}</p>
                         <p className="details-wrapper" ><strong>loại phòng:</strong> {roomData.typeRoom?.name}</p>
                         <p className="details-wrapper" ><strong>Giá:</strong> {roomData?.typeRoom.price}$ 💰</p>
                         <p className="details-wrapper" ><strong>số người ở:</strong>   {roomData?.typeRoom.numberOfPeople}   🧑</p>
                         <p className="details-wrapper" ><strong>số giường:</strong>    {roomData?.typeRoom.numberOfBeds}   🛏️</p>
                         <p className="details-wrapper" ><strong>trạng thái đặt đòng:</strong>    {bookingData.status}   </p>
-                        <p className="details-wrapper" ><strong>check In:</strong>    {convertDate(bookingData.checkInDate)}  </p>
-                        <p className="details-wrapper" ><strong>check Out:</strong>    {convertDate(bookingData.checkOutDate)}  </p>
+                        <p className="details-wrapper" ><strong>Ngày Nhận Phòng:</strong>    {convertDate(bookingData.checkInDate)}  </p>
+                        <p className="details-wrapper" ><strong>Ngày Trả Phòng:</strong>    {convertDate(bookingData.checkOutDate)}  </p>
                         <p className="details-wrapper" ><strong>Tên:</strong>    {userData.name}  </p>
                         <p className="details-wrapper" ><strong>Email:</strong>    {userData.email}  </p>
                         <p className="details-wrapper" ><strong>số điện thoại:</strong>    {userData.phone}  </p>

@@ -119,7 +119,7 @@ const Booking = () => {
             <p className="details-wrapper"><strong>ID:</strong> {roomData.id}</p>
             <p className="details-wrapper" ><strong>Tên:</strong> {roomData.name}</p>
             <p className="details-wrapper" ><strong>Tầng:</strong> {roomData.floor} 🏢</p>
-            <p className="details-wrapper" ><strong>Trạng Thái Phòng:</strong> {roomData.status ? 'True' : 'False'}</p>
+            <p className="details-wrapper" ><strong>Trạng Thái Phòng:</strong> {roomData.status ? 'Phòng Trống' : 'Hết Phòng'}</p>
             <p className="details-wrapper" ><strong>Loại Phòng:</strong> {roomData.typeRoom.name}</p>
             <p className="details-wrapper" ><strong>Giá:</strong> {roomData.typeRoom.price}$ 💰</p>
             <p className="details-wrapper" ><strong>Số Người ở:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
