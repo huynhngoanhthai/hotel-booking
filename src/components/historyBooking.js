@@ -103,7 +103,7 @@ const HistoryBooking = () => {
         if (status === 'cancel')
             return "Hủy";
         if (status === 'accept')
-            return "Chấp Nhập";
+            return "Chấp Nhận";
         if (status === 'reject')
             return "Từ Chối";
 
