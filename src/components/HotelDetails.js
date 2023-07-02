@@ -296,7 +296,7 @@ const CompanyDetails = () => {
               <div className="input-row">
                 <label>Trạng Thái Phòng:</label>
                 <select
-                  defaultValue={!company.status ? "false" : "true"}
+                  defaultValue={!company.status ? 'Phòng Trống' : 'Hết Phòng'}
                   onChange={(event) =>
                     debouncedEditRoom({
                       ...company,

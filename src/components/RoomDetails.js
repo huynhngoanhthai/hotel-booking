@@ -36,7 +36,7 @@ const RoomDetails = () => {
         <p><strong>ID:</strong> {roomData.id}</p>
         <p><strong>Name:</strong> {roomData.name}</p>
         <p><strong>Floor:</strong> {roomData.floor} 🏢</p>
-        <p><strong>Status:</strong> {roomData.status ? 'True' : 'False'}</p>
+        <p><strong>Status:</strong> {roomData.status ? 'Phòng Trống' : 'Hết Phòng'}</p>
         <p><strong>Type Room:</strong> {roomData.typeRoom.name}</p>
         <p><strong>Price:</strong> {roomData.typeRoom.price}$ 💰</p>
         <p><strong>Number of people:</strong>   {roomData.typeRoom.numberOfPeople}   🧑</p>
