@@ -37,16 +37,23 @@ const BookingDetails = () => {
         fetchData();
     }, [id]);
 
-    const acceptBooking = async (booking_id) => {
+    const acceptBooking = async (booking) => {
         if (!(await instance.get("/users/me")).data.admin) {
-           return  navigate("/history-booking");
+            return navigate("/history-booking");
         }
+        console.log(booking.status);
+
+        if (booking.status === 'cancel') {
+            alert('Người Dùng Đã Hủy Phòng Bạn Không Thể  Thay Đổi');
+            return navigate("/history-booking");
+        }
+
         const body = {
             status: "accept"
         };
         try {
-            // await instance.patch("/bookings/" + booking_id, body);
-            const response = await instance.patch("/bookings/" + booking_id, body);
+            // await instance.patch("/bookings/" + booking, body);
+            const response = await instance.patch("/bookings/" + booking.id, body);
             console.log(response.data);
             navigate("/history-booking");
         } catch (error) {
@@ -55,30 +62,39 @@ const BookingDetails = () => {
         }
 
     }
-    const rejectBooking = async(booking_id)=>{
+    const rejectBooking = async (booking) => {
         if (!(await instance.get("/users/me")).data.admin) {
+            if (booking.status !== 'new') {
+                alert("Trạng Thái Đã Được Chập Thuận Bạn Không Thể  Hủy");
+                return navigate("/history-booking");
+            }
             const body = {
                 status: "cancel"
             };
             try {
-                await instance.patch("/bookings/" + booking_id, body);
+                await instance.patch("/bookings/" + booking.id, body);
                 navigate("/history-booking");
             } catch (error) {
                 console.log(error.message);
                 alert(error.response.data.message);
             }
-            return  navigate("/history-booking");
-         }
-         const body = {
-             status: "accept"
-         };
-         try {
-             await instance.patch("/bookings/" + booking_id, body);
-             navigate("/history-booking");
-         } catch (error) {
-             console.log(error.message);
-             alert(error.response.data.message);
-         }
+            return navigate("/history-booking");
+        }
+
+        if (booking.status === 'cancel') {
+            alert('Người Dùng Đã Hủy Phòng Bạn Không Thể  Thay Đổi');
+            return navigate("/history-booking");
+        }
+        const body = {
+            status: "accept"
+        };
+        try {
+            await instance.patch("/bookings/" + booking.id, body);
+            navigate("/history-booking");
+        } catch (error) {
+            console.log(error.message);
+            alert(error.response.data.message);
+        }
     }
 
     const convertDate = (dateString) => {
@@ -106,7 +122,7 @@ const BookingDetails = () => {
                         <img className="image-booking" src={images[(roomData?.id % 6)]} alt="Room" />
                     </div>
                     <div className="booking-details">
-                        <h2 style={{marginLeft:"10px"}}> Thông Tin Đặt Phòng </h2>
+                        <h2 style={{ marginLeft: "10px" }}> Thông Tin Đặt Phòng </h2>
                         <p className="details-wrapper"><strong>ID:</strong> {roomData?.id}</p>
                         <p className="details-wrapper" ><strong>tên phòng:</strong> {roomData?.name}</p>
                         <p className="details-wrapper" ><strong>Tầng:</strong> {roomData?.floor} 🏢</p>
@@ -121,8 +137,8 @@ const BookingDetails = () => {
                         <p className="details-wrapper" ><strong>Tên:</strong>    {userData.name}  </p>
                         <p className="details-wrapper" ><strong>Email:</strong>    {userData.email}  </p>
                         <p className="details-wrapper" ><strong>số điện thoại:</strong>    {userData.phone}  </p>
-                        <button className="add-button-accept" onClick={() => acceptBooking(bookingData.id)}> XÁC NHẬN </button>
-                        <button className="add-button-reject" onClick={() => rejectBooking(bookingData.id)}> TỪ CHỐI </button>
+                        <button className="add-button-accept" onClick={() => acceptBooking(bookingData)}> XÁC NHẬN </button>
+                        <button className="add-button-reject" onClick={() => rejectBooking(bookingData)}> TỪ CHỐI </button>
 
                     </div>
 

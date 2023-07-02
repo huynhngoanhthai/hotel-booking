@@ -99,7 +99,7 @@ const ViewHotels = () => {
                             <img className="image-room" src={images[(id % 6)]} alt="Room" />
                         </div>
                         <div className="room-details">
-                            <h2>Thông tin tiết khách sạn</h2>
+                            <h2>Thông tin chi tiết khách sạn</h2>
                             <p className="details-wrapper"><strong>ID:</strong> {hotelsData.id}</p>
                             <p className="details-wrapper" ><strong>Tên:</strong> {hotelsData.name}</p>
                             <p className="details-wrapper" ><strong>Email:</strong> {hotelsData.email}</p>

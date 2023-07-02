@@ -37,7 +37,9 @@ const HistoryBooking = () => {
     };
 
     const deleteHistoryBook = async (booking_id) => {
-
+        if(booking_id.status === 'cancel'){
+            return alert('Người Dùng Đã Hủy Phòng Bạn Không Thể  Thay Đổi');
+        }
         const body = {
             status: "reject"
         };
@@ -52,6 +54,11 @@ const HistoryBooking = () => {
         }
     }
     const cancelHistoryBook = async (booking_id) => {
+
+        if(booking_id.status !== "new"){
+            return alert("Trạng Thái Đã Được Chập Thuận Bạn Không Thể  Hủy");
+        }
+
         const body = {
             status: "cancel"
         };
@@ -65,13 +72,15 @@ const HistoryBooking = () => {
         }
     }
     const acceptBooking = async (booking_id) => {
+        if(booking_id.status === 'cancel'){
+            return alert('Người Dùng Đã Hủy Phòng Bạn Không Thể  Thay Đổi');
+        }
         const body = {
             status: "accept"
         };
         try {
             await instance.patch("/bookings/" + booking_id.id, body);
             const updateData = userData.bookings.map(booking => booking.id === booking_id.id ? { ...booking, status: body.status } : booking);
-            // console.log(updateData);            
             setUserData({ ...userData, bookings: updateData });
         } catch (error) {
             console.log(error.message);
@@ -117,6 +126,15 @@ const HistoryBooking = () => {
             <div className="booking-list">
                 {userData.bookings.map((booking) => (
                     <div className="company-item">
+                         <div className="input-row">
+                            <label>ID Đặt Phòng:</label>
+                            <input
+                                type="text"
+                                value={booking.id}
+                                readOnly
+                            />
+                        </div>
+
                         <div className="input-row">
                             <label>Ngày Đặt Phòng:</label>
                             <input
