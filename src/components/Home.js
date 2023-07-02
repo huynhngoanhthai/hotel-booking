@@ -5,7 +5,6 @@ import instance from "../utils/instance";
 import { useNavigate } from "react-router-dom";
 import Loading from "./loading";
 import CatalogItem from "./CatalogItem";
-import Search from "./search";
 
 
 
@@ -163,7 +162,7 @@ const Home = () => {
     if (content === "")
       return setCompaniesData(companiesDataOrigin);
     console.log(content);
-    const filteredData = companiesData.filter((item) =>
+    const filteredData = companiesDataOrigin.filter((item) =>
       item.name.toLowerCase().includes(content.toLowerCase()) || item.address.toLowerCase().includes(content.toLowerCase())
     );
     setCompaniesData(filteredData);
@@ -173,7 +172,7 @@ const Home = () => {
     if (content === "")
       return setHotelData(hotelDataOrigin);
     console.log(content);
-    const filteredData = hotelData.filter((item) =>
+    const filteredData = hotelDataOrigin.filter((item) =>
       item.name.toLowerCase().includes(content.toLowerCase()) || item.address.toLowerCase().includes(content.toLowerCase())
     );
     setHotelData(filteredData);
@@ -183,7 +182,7 @@ const Home = () => {
     console.log(content);
     if (content === "")
       return setUseData(useDataOrigin);
-    const filteredData = useData.filter((item) =>
+    const filteredData = useDataOrigin.filter((item) =>
       item.name.toLowerCase().includes(content.toLowerCase())
     );
     setUseData(filteredData);
